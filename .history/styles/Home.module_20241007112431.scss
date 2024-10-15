@@ -1,0 +1,85 @@
+// Variables for colors
+$primary-color: #333;
+$secondary-color: #f0f0f0;
+$text-color: white;
+
+// General styling
+body {
+    margin: 0;
+    font-family: sans-serif;
+    background-color: $secondary-color;
+}
+
+// Landing page
+.landingPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: $primary-color;
+    color: $text-color;
+    overflow: hidden;
+    position: relative;
+
+    h1 {
+        font-size: 4rem;
+    }
+}
+
+// Kitchen scroll from left
+.kitchen {
+    position: absolute;
+    left: -50%;
+    animation: scrollFromLeft 3s forwards;
+}
+
+@keyframes scrollFromLeft {
+    to {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+// Cookbook scroll from right
+.cookbook {
+    position: absolute;
+    right: -50%;
+    animation: scrollFromRight 3s forwards;
+}
+
+@keyframes scrollFromRight {
+    to {
+        right: 50%;
+        transform: translateX(50%);
+    }
+}
+
+// Home page styling after animation
+.nav {
+    display: flex;
+    justify-content: space-around;
+    background-color: $primary-color;
+    color: $text-color;
+    padding: 1rem;
+}
+
+.navList {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+}
+
+.recipeCards {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 2rem;
+}
+
+.card {
+    background-color: $text-color;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    width: 150px;
+    text-align: center;
+}

@@ -1,0 +1,92 @@
+// Variables for colors
+$primary-color: #333;
+$secondary-color: #f0f0f0;
+$text-color: white;
+
+// Landing page
+.landingPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: $primary-color;
+    color: $text-color;
+    overflow: hidden;
+    position: relative;
+
+    h1 {
+        font-size: 4rem;
+        white-space: nowrap;
+        /* Ensure no line breaks */
+    }
+}
+
+// Kitchen scroll from right
+.kitchen {
+    position: absolute;
+    right: -100%;
+    /* Start far off the screen to the right */
+    animation: scrollFromRight 3s forwards;
+    opacity: 1;
+}
+
+@keyframes scrollFromRight {
+    to {
+        right: 0%;
+        /* Ends at the center */
+        transform: translateX(50%);
+        /* Adjusted for centering */
+    }
+}
+
+// Cookbook scroll from left
+.cookbook {
+    position: absolute;
+    left: -100%;
+    /* Start far off the screen to the left */
+    animation: scrollFromLeft 3s forwards;
+    opacity: 1;
+}
+
+@keyframes scrollFromLeft {
+    to {
+        left: 0%;
+        /* Ends at the center */
+        transform: translateX(-50%);
+        /* Adjusted for centering */
+    }
+}
+
+// Fade out the scrolling text after animation completes
+.kitchen,
+.cookbook {
+    animation: fadeOut 0.5s forwards 3.5s;
+    /* Fade out starts after scroll completes */
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+    }
+}
+
+// Final "Kitchen Cookbook" text fades in after scrolling text disappears
+.finalText {
+    position: absolute;
+    font-size: 4rem;
+    opacity: 0;
+    animation: fadeIn 1s forwards 4s;
+    /* Fades in after scrolling text fades out */
+    left: 50%;
+    /* Center it horizontally */
+    transform: translateX(-50%);
+    /* Align to the center */
+    white-space: nowrap;
+    /* Ensure no line breaks */
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
