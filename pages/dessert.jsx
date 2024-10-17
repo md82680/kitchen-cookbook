@@ -27,7 +27,7 @@ export default function Dessert() {
       <div className="p-4 text-center">
         <h2 className="text-3xl font-bold mb-4">Dessert Recipes</h2>
         {/* Center Carousel */}
-        <Carousel recipes={dessertRecipes} />
+        <RecipeCarousel recipes={dessertRecipes} />
       </div>
     </>
   );

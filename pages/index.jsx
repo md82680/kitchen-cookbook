@@ -49,8 +49,6 @@ export default function Home() {
 
   return (
     <>
-      
-
       {!showContent && (
         <div className={styles.landingPage}>
           <h1 className={styles.kitchen}>Kitchen</h1>
@@ -64,7 +62,8 @@ export default function Home() {
           <Navbar />
           <div className={styles.homeSection} id="home">
             <h1>
-              Cooking with heart is the best way to bring friends and family together
+              Cooking with heart is the best way to bring friends and family
+              together
             </h1>
           </div>
           <div className={styles.aboutSection} id="about">
@@ -76,10 +75,7 @@ export default function Home() {
           </div>
           <div className={styles.recipeSection} id="recipes">
             <h2>Recipes</h2>
-            {/* Search bar embedded under the Recipes heading */}
-            <SearchBar recipes={recipes} />{" "}
-            {/* Pass recipes data to the SearchBar component */}
-            {/* Default recipe cards */}
+            <SearchBar recipes={recipes} />
             <div className={styles.recipeCards}>
               <RecipeCard title="Breakfast" link="/breakfast" />
               <RecipeCard title="Dinner" link="/dinner" />

@@ -27,7 +27,7 @@ export default function Breakfast() {
       <div className="p-4 text-center">
         <h2 className="text-3xl font-bold mb-4">Breakfast Recipes</h2>
         {/* Center Carousel */}
-        <Carousel recipes={breakfastRecipes} />
+        <RecipeCarousel recipes={breakfastRecipes} />
       </div>
     </>
   );
