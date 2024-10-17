@@ -1,6 +1,6 @@
 // pages/_app.js
 import "../styles/globals.scss"; // Import global styles
-import "../styles/globals.css";
+
 
 
 export default function MyApp({ Component, pageProps }) {

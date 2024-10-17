@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import RecipeCard from "../components/RecipeCard";
 import SearchBar from "../components/SearchBar"; // Import the search bar component
-import Image from "next/image";
 import styles from "../styles/Home.module.scss";
 
 export default function Home() {
   const [showContent, setShowContent] = useState(false);
+  const [hasVisited, setHasVisited] = useState(false);
 
   const recipes = [
     {
@@ -27,14 +27,25 @@ export default function Home() {
     // Add more recipes here
   ];
 
-  useEffect(() => {
-    // Always show the animation when the component mounts
-    const timer = setTimeout(() => {
-      setShowContent(true);
-    }, 4500); // 5-second delay for fade-in animation
+    useEffect(() => {
+      // Check if the user has visited before
+      const visited = localStorage.getItem("hasVisitedHome");
 
-    return () => clearTimeout(timer); // Cleanup timer on unmount
-  }, []);
+      if (!visited) {
+        // First visit: show animation
+        const timer = setTimeout(() => {
+          setShowContent(true);
+          setHasVisited(true);
+          localStorage.setItem("hasVisitedHome", "true");
+        }, 4500);
+
+        return () => clearTimeout(timer);
+      } else {
+        // Subsequent visits: show content immediately
+        setShowContent(true);
+        setHasVisited(true);
+      }
+    }, []);
 
   return (
     <>
@@ -53,9 +64,7 @@ export default function Home() {
           <Navbar />
           <div className={styles.homeSection} id="home">
             <h1>
-              Cooking with{" "}
-              <Image src="/heart.png" alt="heart" width={40} height={40} /> is
-              the best way to bring friends and family together
+              Cooking with heart is the best way to bring friends and family together
             </h1>
           </div>
           <div className={styles.aboutSection} id="about">
@@ -72,9 +81,9 @@ export default function Home() {
             {/* Pass recipes data to the SearchBar component */}
             {/* Default recipe cards */}
             <div className={styles.recipeCards}>
-              <RecipeCard title="Breakfast" link="/recipes/breakfast" />
-              <RecipeCard title="Dinner" link="/recipes/dinner" />
-              <RecipeCard title="Dessert" link="/recipes/dessert" />
+              <RecipeCard title="Breakfast" link="/breakfast" />
+              <RecipeCard title="Dinner" link="/dinner" />
+              <RecipeCard title="Dessert" link="/dessert" />
             </div>
           </div>
         </>
