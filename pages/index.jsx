@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import RecipeCard from "../components/RecipeCard";
+import CategoryCard from "../components/CategoryCard";
 import SearchBar from "../components/SearchBar"; // Import the search bar component
 import styles from "../styles/Home.module.scss";
 
@@ -77,9 +78,21 @@ export default function Home() {
             <h2>Recipes</h2>
             <SearchBar recipes={recipes} />
             <div className={styles.recipeCards}>
-              <RecipeCard title="Breakfast" link="/breakfast" />
-              <RecipeCard title="Dinner" link="/dinner" />
-              <RecipeCard title="Dessert" link="/dessert" />
+              <CategoryCard
+                title="Breakfast"
+                link="/breakfast"
+                imageSrc="/images/breakfast.jpg"
+              />
+              <CategoryCard
+                title="Dinner"
+                link="/dinner"
+                imageSrc="/images/dinner.jpg"
+              />
+              <CategoryCard
+                title="Dessert"
+                link="/dessert"
+                imageSrc="/images/dessert.jpg"
+              />
             </div>
           </div>
         </>
