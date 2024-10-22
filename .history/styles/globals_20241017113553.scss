@@ -1,0 +1,48 @@
+// General styling
+// Global styles for the entire project
+body {
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    font-size: 16px; // Base font size
+    line-height: 1.5; // Good line height for readability
+    color: #333; // Default text color
+}
+
+// Specific style for headings
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    font-weight: bold; // Ensure headings are bold for better distinction
+    margin-bottom: 1rem;
+}
+
+// For specific sections (e.g., About section)
+.aboutSection {
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    font-size: 1.2rem; // Slightly larger for readability
+    color: #444;
+}
+
+// Styling for navigation bar links
+.navbar ul li {
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    font-weight: normal;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+// Styling for buttons, if applicable
+button {
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #007BFF;
+    padding: 0.75rem 1.25rem;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
