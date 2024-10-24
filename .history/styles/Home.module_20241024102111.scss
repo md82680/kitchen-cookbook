@@ -1,0 +1,131 @@
+// Variables for colors
+$primary-color: #333;
+$text-color: white;
+
+// Landing page
+.landingPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: $primary-color;
+    color: $text-color;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+        /* Ensure it appears below the navbar */
+
+    h1 {
+        font-size: 4rem;
+    }
+}
+
+.navbar {
+    position: fixed;
+    /* Make the navbar fixed */
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #333;
+    padding: 1rem;
+    color: white;
+    z-index: 2;
+    /* Ensure it stays above the landing page */
+}
+
+.homeSection {
+    background-color: #766262;
+    color: #f1f0f0;
+    text-align: center;
+    padding: 4rem 2rem;
+}
+
+.aboutSection {
+    background: #f4f4f3;
+    color: #161616;
+    text-align: center;
+    padding: 4rem 2rem;
+}
+
+.recipeSection {
+    background: linear-gradient(135deg, #e8edf4 0%, #c3cfe2 100%);
+    color: #1a1f3e;
+    padding: 4rem 2rem; 
+    text-align: center;
+
+    .categoryCards {
+        // Changed from .recipeCards to .categoryCards
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        flex-wrap: wrap; // Add this to allow wrapping on smaller screens
+        margin-top: 2rem; // Add some space above the cards
+    }
+}
+
+
+// Kitchen scroll from right (basic scroll animation)
+.kitchen {
+    position: absolute;
+    right: -15%;
+    /* Start offscreen */
+    animation: scrollFromRight 2.25s forwards, fadeOut 0.5s forwards 3s;
+    /* Add fade-out */
+    opacity: 1;
+}
+
+@keyframes scrollFromRight {
+    to {
+        right: 47.03%;
+        /* Scroll to middle */
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+    }
+}
+
+// Cookbook scroll from left (basic scroll animation)
+.cookbook {
+    position: absolute;
+    left: -15%;
+    /* Start offscreen */
+    animation: scrollFromLeft 2.25s forwards, fadeOut 0.5s forwards 3s;
+    /* Add fade-out */
+    opacity: 1;
+}
+
+@keyframes scrollFromLeft {
+    to {
+        left: 42%;
+        /* Scroll to middle */
+        transform: translateX(50%);
+    }
+}
+
+// Final "Kitchen Cookbook" text fades in after scrolling text disappears
+.finalText {
+    position: absolute;
+    font-size: 4rem;
+    opacity: 0;
+    animation: fadeIn 0s forwards 3.0s;
+    /* Fades in after scrolling text fades out */
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .recipeSection {
+        .categoryCards {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+}
