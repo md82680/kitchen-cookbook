@@ -22,8 +22,7 @@ model Recipe {
   description  String
   instructions String
   ingredients  String[]
-  imageUrl     String   @default("/images/default-recipe.jpg") // Default image path
-  imageName    String?  // Store the original filename
+  imageUrl     String
   category     String   // "breakfast", "dinner", "dessert"
   author       User     @relation(fields: [authorId], references: [id])
   authorId     Int
