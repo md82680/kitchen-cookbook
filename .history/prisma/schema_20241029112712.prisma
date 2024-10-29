@@ -1,13 +1,3 @@
-datasource db {
-  provider = "postgresql"
-  url      = env("POSTGRES_PRISMA_URL")
-}
-
-generator client {
-  provider = "prisma-client-js"
-}
-
-
 enum RecipeCategory {
   BREAKFAST
   DINNER
