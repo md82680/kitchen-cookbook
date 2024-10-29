@@ -50,6 +50,6 @@ model Ingredient {
   amount      String   // Using String to allow for "1/2", "1/4" etc.
   unit        String   // e.g., "cups", "tablespoons"
   item        String   // The ingredient name
-  recipe      Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  recipe      Recipe   @relation(fields: [recipeId], references: [id])
   recipeId    Int
 }
