@@ -8,7 +8,6 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 
 export default function Home() {
-  const { data: session } = useSession();
   const [showContent, setShowContent] = useState(false);
   const [initialLoadDone, setInitialLoadDone] = useState(false);
   const router = useRouter();

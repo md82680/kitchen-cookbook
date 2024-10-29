@@ -8,7 +8,6 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 
 export default function Home() {
-  const { data: session } = useSession();
   const [showContent, setShowContent] = useState(false);
   const [initialLoadDone, setInitialLoadDone] = useState(false);
   const router = useRouter();
@@ -89,14 +88,6 @@ export default function Home() {
       </div>
       <div className={styles.recipeSection} id="recipes">
         <h2>Recipes</h2>
-        {session && (
-          <Link 
-            href="/admin/add-recipe" 
-            className={styles.addRecipeButton}
-          >
-            Add Recipe
-          </Link>
-        )}
         <SearchBar recipes={recipes} />
         <div className={styles.categoryCards}>
           <CategoryCard 
