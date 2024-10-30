@@ -13,18 +13,13 @@ export default NextAuth({
       },
       async authorize(credentials) {
         try {
-          console.log("Auth attempt for:", credentials.username);
-
           const user = await prisma.user.findUnique({
             where: {
               username: credentials.username,
             },
           });
 
-          console.log("User found:", !!user);
-
           if (!user) {
-            console.log("No user found");
             return null;
           }
 
@@ -33,14 +28,10 @@ export default NextAuth({
             user.password
           );
 
-          console.log("Password valid:", isPasswordValid);
-
           if (!isPasswordValid) {
-            console.log("Invalid password");
             return null;
           }
 
-          console.log("Auth successful");
           return {
             id: user.id,
             username: user.username,
@@ -59,16 +50,11 @@ export default NextAuth({
         token.role = user.role;
         token.username = user.username;
       }
-      console.log("JWT callback:", { token });
       return token;
     },
     async session({ session, token }) {
-      session.user = {
-        ...session.user,
-        role: token.role,
-        username: token.username,
-      };
-      console.log("Session callback:", { session });
+      session.user.role = token.role;
+      session.user.username = token.username;
       return session;
     },
   },
@@ -77,7 +63,5 @@ export default NextAuth({
   },
   session: {
     strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60, // 30 days
   },
-  debug: true, // Enable debug messages
 });

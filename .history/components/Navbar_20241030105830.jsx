@@ -13,24 +13,11 @@ export default function Navbar() {
     setShowLoginForm(!showLoginForm);
   };
 
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  };
-
   return (
     <nav className={`${styles.navbar} ${styles.sticky}`}>
       <ul>
         <li>
-          <a 
-            href="/" 
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToTop();
-            }}
-          >
+          <a href="/" onClick={() => {scrollToTop()}}>
             Home
           </a>
         </li>

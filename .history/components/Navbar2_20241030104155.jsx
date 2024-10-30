@@ -1,17 +1,27 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react"; // Add this import
 import styles from "../styles/Navbar.module.scss";
 import LoginForm from "./LoginForm";
-import UserProfile from "./UserProfile";
 
 export default function Navbar2() {
   const [showLoginForm, setShowLoginForm] = useState(false);
   const router = useRouter();
-  const { data: session } = useSession();
+  const { data: session } = useSession(); // Add this hook
 
   const toggleLoginForm = () => {
     setShowLoginForm(!showLoginForm);
+  };
+
+  const handleAuthClick = async () => {
+    if (session) {
+      // Handle logout
+      await signOut({ redirect: false });
+      // You might want to handle post-logout actions here
+    } else {
+      // Handle login
+      toggleLoginForm();
+    }
   };
 
   const navigateToSection = (sectionId) => {
@@ -49,11 +59,9 @@ export default function Navbar2() {
           </a>
         </li>
         <li>
-          {session ? (
-            <UserProfile />
-          ) : (
-            <button onClick={toggleLoginForm}>Login</button>
-          )}
+          <button onClick={handleAuthClick}>
+            {session ? "Logout" : "Login"}
+          </button>
         </li>
       </ul>
       {showLoginForm && !session && (

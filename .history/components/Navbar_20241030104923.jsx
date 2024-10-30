@@ -1,33 +1,35 @@
 import { useState } from "react";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import styles from "../styles/Navbar.module.scss";
 import LoginForm from "./LoginForm";
-import UserProfile from "./UserProfile";
 
 export default function Navbar() {
   const [showLoginForm, setShowLoginForm] = useState(false);
-  const { data: session, status } = useSession();
+  const { data: session } = useSession(); // Add this hook
 
   const toggleLoginForm = () => {
     setShowLoginForm(!showLoginForm);
   };
 
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
+  const handleAuthClick = async () => {
+    if (session) {
+      // Handle logout
+      await signOut({ redirect: false });
+      // You might want to handle post-logout actions here
+    } else {
+      // Handle login
+      toggleLoginForm();
+    }
   };
 
   return (
     <nav className={`${styles.navbar} ${styles.sticky}`}>
       <ul>
         <li>
-          <a 
-            href="/" 
-            onClick={(e) => {
-              e.preventDefault();
+          <a
+            href="/"
+            onClick={() => {
               scrollToTop();
             }}
           >
@@ -45,11 +47,9 @@ export default function Navbar() {
           </Link>
         </li>
         <li>
-          {session ? (
-            <UserProfile />
-          ) : (
-            <button onClick={toggleLoginForm}>Login</button>
-          )}
+          <button onClick={handleAuthClick}>
+            {session ? "Logout" : "Login"}
+          </button>
         </li>
       </ul>
       {showLoginForm && !session && (
