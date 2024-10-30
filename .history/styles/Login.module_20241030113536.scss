@@ -4,7 +4,7 @@
     left: 70%;
     transform: translate(-50%, -50%);
     background-color: white;
-    padding: 30px 15px 5px; // Increased top padding to give more space
+    padding: 40px 15px 10px; // Increased top padding to give more space
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     width: 90%;
@@ -12,22 +12,22 @@
     z-index: 1000;
     overflow-y: auto;
     max-height: 90vh;
-    min-height: 180px; // Added minimum height
+    min-height: 260px; // Added minimum height
 }
 
 .closeButton {
     position: absolute;
-    top: 8px; // Moved down slightly
-    right: 5px; // Moved right slightly
+    top: 15px; // Moved down slightly
+    right: 15px; // Moved right slightly
     background: none;
     border: none;
     font-size: 1.2rem;
     cursor: pointer;
-    color: #ada7a7 !important;
+    color: #333;
     padding: 5px 10px; // Added padding for better click target
 
     &:hover {
-        color: #000 !important;
+        color: #000;
     }
 }
 

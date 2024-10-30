@@ -17,17 +17,17 @@
 
 .closeButton {
     position: absolute;
-    top: 8px; // Moved down slightly
-    right: 5px; // Moved right slightly
+    top: 10px; // Moved down slightly
+    right: 10px; // Moved right slightly
     background: none;
     border: none;
     font-size: 1.2rem;
     cursor: pointer;
-    color: #ada7a7 !important;
-    padding: 5px 10px; // Added padding for better click target
+    color: #333;
+    padding: 5px 5px; // Added padding for better click target
 
     &:hover {
-        color: #000 !important;
+        color: #000;
     }
 }
 
