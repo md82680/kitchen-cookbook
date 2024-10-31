@@ -154,7 +154,7 @@ $text-color: white;
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-        animation: zoomInBackground 10s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+        animation: zoomInBackground 3s ease-out forwards;
         z-index: 1;
     }
 
@@ -182,7 +182,7 @@ $text-color: white;
 
 @keyframes zoomInBackground {
     0% {
-        transform: scale(1.15);
+        transform: scale(1.2);
     }
     100% {
         transform: scale(1);

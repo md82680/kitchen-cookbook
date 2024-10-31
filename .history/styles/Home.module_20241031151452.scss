@@ -140,52 +140,18 @@ $text-color: white;
     justify-content: center;
     text-align: center;
     padding: var(--spacing-xl);
-    position: relative;
-    overflow: hidden;
-
-    &::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-image: url('/images/kitchen.jpg');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        animation: zoomInBackground 10s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
-        z-index: 1;
-    }
-
-    &::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: 2;
-    }
+    background: linear-gradient(
+        rgba(255, 255, 255, 0.9),
+        rgba(255, 255, 255, 0.7)
+    ),
+    url('/images/hero-background.jpg') center/cover;
 
     h1 {
         font-size: clamp(2rem, 5vw, 4rem);
         max-width: 800px;
         margin: 0 auto;
-        color: white;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        position: relative;
-        z-index: 3;
-    }
-}
-
-@keyframes zoomInBackground {
-    0% {
-        transform: scale(1.15);
-    }
-    100% {
-        transform: scale(1);
+        color: var(--color-text);
+        animation: fadeIn var(--transition-slow);
     }
 }
 
@@ -374,4 +340,101 @@ $text-color: white;
     50% {
         transform: translateY(-5px);
     }
+}
+
+.container {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden; // Important for zoom effect
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url('/kitchen.jpg'); // Your image path
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        opacity: 0.3; // Adjust for better text visibility
+        z-index: -1;
+        animation: zoomBackground 3s ease-out forwards;
+    }
+
+    // Add a dark overlay for better text contrast
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+            rgba(0, 0, 0, 0.4),
+            rgba(0, 0, 0, 0.2)
+        );
+        z-index: -1;
+    }
+
+    opacity: 0;
+    transition: opacity 1s ease-in;
+
+    &.loaded {
+        opacity: 1;
+    }
+}
+
+@keyframes zoomBackground {
+    0% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.main {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    background-color: var(--color-background); // Fallback color
+}
+
+.backgroundImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/kitchen.jpg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.15; // Reduced opacity for better visibility of content
+    animation: zoomIn 3s ease-out forwards;
+    z-index: 0;
+}
+
+.content {
+    position: relative;
+    z-index: 1; // Ensure content stays above background
+    padding-top: 6rem; // Add space for navbar
+}
+
+@keyframes zoomIn {
+    0% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+// Keep your existing styles for cards, grid, etc.
+.categoryGrid {
+    // ... existing styles ...
+    position: relative;
+    z-index: 1;
 }
