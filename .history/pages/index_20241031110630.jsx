@@ -46,18 +46,24 @@ export default function Home() {
 
   useEffect(() => {
     const fetchRecipes = async () => {
-      try {
-        const response = await fetch('/api/recipes');
-        if (!response.ok) throw new Error('Failed to fetch recipes');
-        const data = await response.json();
-        setRecipes(data.slice(0, 5)); // Get latest 5 recipes
-      } catch (error) {
-        console.error('Error fetching recipes:', error);
-      }
-    };
-
-    fetchRecipes();
-  }, []);
+  const recipes = [
+    {
+      title: "Spaghetti Bolognese",
+      description: "A hearty meat sauce with pasta.",
+      slug: "spaghetti-bolognese",
+    },
+    {
+      title: "Oat Flour Chocolate Chip Cookies",
+      description: "Delicious and healthy oat flour cookies.",
+      slug: "oat-flour-chocolate-chip-cookies",
+    },
+    {
+      title: "Chicken Alfredo",
+      description: "Creamy pasta with chicken and Alfredo sauce.",
+      slug: "chicken-alfredo",
+    },
+    // Add more recipes here
+  ];
 
   if (!showContent) {
     return (

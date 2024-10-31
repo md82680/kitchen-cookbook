@@ -51,10 +51,7 @@ export default function RecipeDetailCard({
                 ))}
               </ul>
             </div>
-            <div className={styles.instructions}>
-              <h4>Instructions:</h4>
-              <p>{instructions}</p>
-            </div>
+            <p>{recipe}</p>
           </div>
         </div>
       </div>

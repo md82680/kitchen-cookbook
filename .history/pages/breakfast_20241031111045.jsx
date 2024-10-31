@@ -3,7 +3,7 @@ import Navbar2 from "../components/Navbar2";
 import RecipeDetailCard from "../components/RecipeDetailCard";
 import styles from "../styles/RecipePage.module.scss";
 
-export default function AppetizersSnacks() {
+export default function Breakfast() {
   const [recipes, setRecipes] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -12,7 +12,7 @@ export default function AppetizersSnacks() {
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const response = await fetch('/api/recipes/APPETIZERS_SNACKS');
+        const response = await fetch('/api/recipes/BREAKFAST');
         if (!response.ok) {
           throw new Error('Failed to fetch recipes');
         }
@@ -31,42 +31,47 @@ export default function AppetizersSnacks() {
   const nextRecipe = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % recipes.length);
   };
+  const breakfastRecipes = [
+    {
+      title: "Spaghetti Bolognese",
+      description: "A hearty meat sauce with pasta.",
+      image: "/spaghetti.jpg",
+      recipe: "1. Cook spaghetti. 2. Prepare meat sauce. 3. Combine and serve.",
+    },
+    {
+      title: "Chicken Alfredo",
+      description: "Creamy pasta with chicken and Alfredo sauce.",
+      image: "/chicken-alfredo.jpg",
+      recipe:
+        "1. Cook pasta. 2. Prepare Alfredo sauce. 3. Cook chicken. 4. Combine all ingredients.",
+    },
+    // Add more recipes here
+  ];
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const nextRecipe = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % breakfastRecipes.length);
+  };
 
   const prevRecipe = () => {
     setCurrentIndex(
-      (prevIndex) => (prevIndex - 1 + recipes.length) % recipes.length
+      (prevIndex) =>
+        (prevIndex - 1 + breakfastRecipes.length) % breakfastRecipes.length
     );
   };
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-  if (recipes.length === 0) return <div>No recipes found</div>;
 
   return (
     <>
       <Navbar2 />
       <div className={styles.container}>
-        <h2 className={styles.title}>Appetizers/Snacks Recipes</h2>
+        <h2 className={styles.title}>Breakfast Recipes</h2>
         <div className={styles.carouselContainer}>
-          <button 
-            className={styles.carouselButton} 
-            onClick={prevRecipe}
-            disabled={recipes.length <= 1}
-          >
+          <button className={styles.carouselButton} onClick={prevRecipe}>
             &lt;
           </button>
-          <RecipeDetailCard 
-            title={recipes[currentIndex].recipeTitle}
-            description={recipes[currentIndex].recipeDescription}
-            image={recipes[currentIndex].recipeImage}
-            instructions={recipes[currentIndex].recipeInstructions}
-            ingredients={recipes[currentIndex].ingredients}
-          />
-          <button 
-            className={styles.carouselButton} 
-            onClick={nextRecipe}
-            disabled={recipes.length <= 1}
-          >
+          <RecipeDetailCard {...breakfastRecipes[currentIndex]} />
+          <button className={styles.carouselButton} onClick={nextRecipe}>
             &gt;
           </button>
         </div>
