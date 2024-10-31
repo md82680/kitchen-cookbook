@@ -167,13 +167,6 @@ export default function RecipeForm({ onSuccess }) {
     }
   };
 
-  const handleCancel = () => {
-    const confirmCancel = window.confirm("Are you sure you want to cancel? All changes will be lost.");
-    if (confirmCancel) {
-      router.back(); // This will take the user back to the previous page
-    }
-  };
-
   return (
     <form onSubmit={handleSubmit} className={styles.recipeForm}>
       {error && <div className={styles.error}>{error}</div>}
@@ -309,22 +302,13 @@ export default function RecipeForm({ onSuccess }) {
         />
       </div>
 
-      <div className={styles.formActions}>
-        <button 
-          type="button" 
-          onClick={handleCancel}
-          className={styles.cancelButton}
-        >
-          Cancel
-        </button>
-        <button 
-          type="submit" 
-          className={styles.submitButton}
-          disabled={isSubmitting}
-        >
-          {isSubmitting ? "Creating Recipe..." : "Create Recipe"}
-        </button>
-      </div>
+      <button 
+        type="submit" 
+        className={styles.submitButton}
+        disabled={isSubmitting}
+      >
+        {isSubmitting ? "Creating Recipe..." : "Create Recipe"}
+      </button>
     </form>
   );
 }
