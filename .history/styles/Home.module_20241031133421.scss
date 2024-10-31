@@ -185,6 +185,59 @@ $text-color: white;
 }
 
 @media (max-width: 768px) {
+// Kitchen scroll from right (basic scroll animation)
+.kitchen {
+    position: absolute;
+    right: -15%;
+    /* Start offscreen */
+    animation: scrollFromRight 2.9s forwards, fadeOut 0.5s forwards 3s;
+    /* Add fade-out */
+    opacity: 1;
+}
+
+@keyframes scrollFromRight {
+    to {
+        right: 43%;
+        /* Scroll to middle */
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+    }
+}
+
+// Cookbook scroll from left (basic scroll animation)
+.cookbook {
+    position: absolute;
+    left: -15%;
+    /* Start offscreen */
+    animation: scrollFromLeft 2.9s forwards, fadeOut 0.5s forwards 3s;
+    /* Add fade-out */
+    opacity: 1;
+}
+
+@keyframes scrollFromLeft {
+    to {
+        left: 43%;
+        /* Scroll to middle */
+        transform: translateX(50%);
+    }
+}
+
+// Final "Kitchen Cookbook" text fades in after scrolling text disappears
+
+
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+@media (max-width: 768px) {
     .recipeSection {
         .categoryCards {
             flex-direction: column;
