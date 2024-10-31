@@ -1,6 +1,6 @@
 .loginFormWrapper {
     position: fixed;
-    top: 400%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: var(--color-background);
@@ -11,7 +11,6 @@
     max-width: 400px;
     z-index: 1000;
     animation: fadeIn 0.3s ease-out;
-    margin-top: 2rem;
     
     &::before {
         content: '';
@@ -23,16 +22,6 @@
         background: linear-gradient(135deg, rgba(230, 184, 156, 0.1), rgba(156, 175, 136, 0.1));
         border-radius: 15px;
         z-index: -1;
-    }
-
-    @media (max-height: 600px) {
-        top: 65%;
-        max-height: 80vh;
-        overflow-y: auto;
-    }
-
-    @media (max-width: 768px) {
-        top: 70%;
     }
 }
 
@@ -88,56 +77,18 @@
 
     button[type="submit"] {
         width: 100%;
-        padding: 1rem;
-        background-color: var(--color-primary);
+        padding: 10px;
+        background-color: #007bff;
         color: white;
         border: none;
-        border-radius: 8px;
-        font-size: 1.1rem;
-        font-weight: 600;
+        border-radius: 4px;
+        font-size: 1rem;
         cursor: pointer;
-        transition: all 0.3s ease;
-        font-family: var(--font-primary);
-        margin-top: 0.5rem;
-        box-shadow: var(--shadow-sm);
+        transition: background-color 0.3s ease;
 
         &:hover {
-            background-color: darken(#E6B89C, 5%);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
+            background-color: #0056b3;
         }
-
-        &:active {
-            transform: translateY(0);
-        }
-    }
-}
-
-.error {
-    background-color: rgba(220, 53, 69, 0.1);
-    color: #dc3545;
-    padding: 1rem;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
-    border: 1px solid rgba(220, 53, 69, 0.2);
-    animation: shake 0.5s ease-in-out;
-}
-
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    75% { transform: translateX(5px); }
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translate(-50%, -45%);
-    }
-    to {
-        opacity: 1;
-        transform: translate(-50%, -50%);
     }
 }
 

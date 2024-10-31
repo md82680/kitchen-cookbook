@@ -1,6 +1,6 @@
 .loginFormWrapper {
     position: fixed;
-    top: 400%;
+    top: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: var(--color-background);
@@ -128,17 +128,6 @@
     0%, 100% { transform: translateX(0); }
     25% { transform: translateX(-5px); }
     75% { transform: translateX(5px); }
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translate(-50%, -45%);
-    }
-    to {
-        opacity: 1;
-        transform: translate(-50%, -50%);
-    }
 }
 
 @media (max-width: 768px) {
