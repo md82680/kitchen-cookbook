@@ -1,0 +1,175 @@
+.recipeForm {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 3rem;
+  background: var(--color-background);
+  border-radius: 15px;
+  box-shadow: var(--shadow-md);
+  animation: fadeIn 0.6s ease-out;
+
+  .submitButton {
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1.1rem;
+    margin-top: 2rem;
+    font-family: var(--font-primary);
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: darken(#E6B89C, 10%);
+      transform: translateY(-2px);
+    }
+
+    &:disabled {
+      background: var(--color-text-light);
+      cursor: not-allowed;
+      transform: none;
+    }
+  }
+
+  .addButton {
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 1rem;
+    font-family: var(--font-primary);
+    font-weight: 500;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: darken(#E6B89C, 10%);
+      transform: translateY(-2px);
+    }
+  }
+}
+
+.formGroup {
+  margin-bottom: 2rem;
+  opacity: 0;
+  animation: slideFromRight 0.6s ease-out forwards;
+
+  @for $i from 1 through 10 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 0.1}s;
+    }
+  }
+
+  label {
+    display: block;
+    margin-bottom: 0.8rem;
+    font-family: var(--font-primary);
+    font-weight: 500;
+    color: var(--color-text);
+    font-size: 1.1rem;
+  }
+
+  input[type="text"],
+  input[type="file"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #E6E6E6;
+    border-radius: 8px;
+    font-size: 1rem;
+    background: white;
+    transition: all 0.3s ease;
+    font-family: var(--font-secondary);
+    color: var(--color-text);
+
+    &:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(230, 184, 156, 0.2);
+    }
+
+    &::placeholder {
+      color: #999;
+    }
+  }
+
+  textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+}
+
+.fileInput {
+  width: 100%;
+  padding: 1rem;
+  border: 2px dashed var(--color-primary);
+  border-radius: 8px;
+  font-size: 1rem;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(230, 184, 156, 0.1);
+  }
+}
+
+.ingredientRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.error {
+  color: #dc3545;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #dc3545;
+  border-radius: 4px;
+  background: #f8d7da;
+}
+
+.imagePreview {
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #f8f9fa;
+}
+
+.previewImage {
+  max-width: 200px;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 4px;
+  display: block;
+  margin: 0 auto;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.removeImageButton {
+  display: block;
+  margin: 1rem auto 0;
+  padding: 0.5rem 1rem;
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background: #c82333;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.25);
+  }
+}
