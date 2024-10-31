@@ -108,7 +108,7 @@ export default function Home() {
           />
           <CategoryCard
             title="Appetizers/Snacks"
-            link="/appetizers_snacks"
+            link="/appetizers/"
             imageSrc="/images/appetizers_snacks.jpg"
           />
           <CategoryCard

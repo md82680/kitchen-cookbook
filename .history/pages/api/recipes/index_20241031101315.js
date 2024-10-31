@@ -14,7 +14,6 @@ export const config = {
 const parseForm = async (req) => {
   const form = new IncomingForm({
     keepExtensions: true,
-    maxFileSize: 5 * 1024 * 1024, // 5MB limit
   });
 
   return new Promise((resolve, reject) => {
@@ -27,37 +26,39 @@ const parseForm = async (req) => {
 
 // Helper function to handle file upload
 const handleFileUpload = async (file) => {
-  console.log('Raw file object:', file);
+  console.log('File object:', file);
 
-  // Handle array of files if necessary
-  const fileToProcess = Array.isArray(file) ? file[0] : file;
-  
-  if (!fileToProcess || !fileToProcess.filepath) {
-    console.error('Invalid file object received:', fileToProcess);
+  if (!file || !file.originalFilename) {
     throw new Error('Invalid file object');
-  }
-
-  const uploadDir = path.join(process.cwd(), "public/images/recipes");
-  await fs.mkdir(uploadDir, { recursive: true });
-
-  // Get original filename or generate one
-  const originalFilename = fileToProcess.originalFilename || 'uploaded-file';
-  const fileExt = path.extname(originalFilename);
-  const uniqueFilename = `recipe-${Date.now()}${fileExt}`;
+  const uniqueFilename = `recipe-${Date.now()}${path.extname(
+    file.originalFilename
+  )}`;
   const finalPath = path.join(uploadDir, uniqueFilename);
 
-  try {
-    await fs.copyFile(fileToProcess.filepath, finalPath);
-    await fs.unlink(fileToProcess.filepath); // Clean up the temp file
+  await fs.rename(file.filepath, finalPath);
 
-    console.log('File uploaded successfully:', uniqueFilename);
-    return {
-      imageUrl: `/images/recipes/${uniqueFilename}`,
-      imageName: originalFilename,
-    };
-  } catch (error) {
-    console.error('File upload error:', error);
-    throw new Error(`Failed to upload file: ${error.message}`);
+  return {
+    imageUrl: `/images/recipes/${uniqueFilename}`,
+    imageName: file.originalFilename,
+  };
+};
+
+// Add basic validation without using trim
+const validateRecipeData = (fields, ingredients) => {
+  if (!fields.recipeTitle) {
+    throw new Error('Recipe title is required');
+  }
+  if (!fields.recipeDescription) {
+    throw new Error('Recipe description is required');
+  }
+  if (!fields.recipeInstructions) {
+    throw new Error('Recipe instructions are required');
+  }
+  if (!ingredients?.length) {
+    throw new Error('At least one ingredient is required');
+  }
+  if (ingredients.some(ing => !ing.amount || !ing.unit || !ing.item)) {
+    throw new Error('All ingredient fields must be filled out');
   }
 };
 
@@ -78,40 +79,30 @@ export default async function handler(req, res) {
     }
 
     if (req.method === "POST") {
-      console.log("Starting POST request processing");
-      
       const session = await getSession({ req });
-      console.log("Session data:", session);
-
       if (!session) {
         return res.status(401).json({ error: "Not authenticated" });
       }
 
       // Parse the multipart form data
-      console.log("Parsing form data");
       const { fields, files } = await parseForm(req);
-      
-      // Debug log the entire files object
-      console.log("Files received:", JSON.stringify(files, null, 2));
 
       // Parse ingredients from form data
-      const ingredients = Array.isArray(fields.ingredients) 
-        ? JSON.parse(fields.ingredients[0] || "[]")
-        : JSON.parse(fields.ingredients || "[]");
+      const ingredients = JSON.parse(fields.ingredients || "[]");
+
+      // Validate the data
+      validateRecipeData(fields, ingredients);
 
       // Handle image upload if a file was provided
       let imageData = {
         imageUrl: "/images/default-recipe.jpg",
         imageName: null,
       };
-
-      if (files && files.image) {
-        console.log("Processing image upload");
+      if (files.image) {
         imageData = await handleFileUpload(files.image);
       }
 
       // Get user
-      console.log("Finding user:", session.user.username);
       const user = await prisma.user.findUnique({
         where: { username: session.user.username },
       });
@@ -120,23 +111,15 @@ export default async function handler(req, res) {
         return res.status(404).json({ error: "User not found" });
       }
 
-      console.log("Creating recipe");
+      // Create recipe with all data
       const recipe = await prisma.recipe.create({
         data: {
-          recipeTitle: Array.isArray(fields.recipeTitle) 
-            ? fields.recipeTitle[0] 
-            : fields.recipeTitle,
-          recipeDescription: Array.isArray(fields.recipeDescription)
-            ? fields.recipeDescription[0]
-            : fields.recipeDescription,
+          recipeTitle: fields.recipeTitle,
+          recipeDescription: fields.recipeDescription,
           recipeImage: imageData.imageUrl,
           imageName: imageData.imageName,
-          recipeCategory: Array.isArray(fields.recipeCategory)
-            ? fields.recipeCategory[0]
-            : fields.recipeCategory,
-          recipeInstructions: Array.isArray(fields.recipeInstructions)
-            ? fields.recipeInstructions[0]
-            : fields.recipeInstructions,
+          recipeCategory: fields.recipeCategory,
+          recipeInstructions: fields.recipeInstructions,
           authorId: user.id,
           ingredients: {
             create: ingredients.map((ing) => ({
@@ -156,7 +139,6 @@ export default async function handler(req, res) {
         },
       });
 
-      console.log("Recipe created successfully:", recipe.id);
       return res.status(201).json(recipe);
     }
 
@@ -164,16 +146,10 @@ export default async function handler(req, res) {
     res.setHeader("Allow", ["GET", "POST"]);
     return res.status(405).end(`Method ${req.method} Not Allowed`);
   } catch (error) {
-    console.error("API Error:", {
-      message: error.message,
-      stack: error.stack,
-      name: error.name
-    });
-    
+    console.error("API Error:", error);
     return res.status(500).json({
       error: "Internal server error",
       message: error.message,
-      details: process.env.NODE_ENV === 'development' ? error.stack : undefined
     });
   }
 }

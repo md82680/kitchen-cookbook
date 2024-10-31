@@ -201,7 +201,6 @@ export default function RecipeForm({ onSuccess }) {
         <input
           type="file"
           id="image"
-          name="image"
           className={styles.fileInput}
           accept={ACCEPTED_IMAGE_TYPES.join(',')}
           onChange={handleImageChange}

@@ -89,7 +89,6 @@
   &:disabled {
     background: #cccccc;
     cursor: not-allowed;
-    opacity: 0.7;
   }
 }
 
@@ -102,42 +101,63 @@
   background: #f8d7da;
 }
 
+// New image preview styles
 .imagePreview {
   margin-top: 1rem;
   padding: 1rem;
   border: 1px solid #ddd;
   border-radius: 4px;
   background: #f8f9fa;
+
+  img {
+    max-width: 200px;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 4px;
+    display: block;
+    margin: 0 auto;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .removeImageButton {
+    display: block;
+    margin: 1rem auto 0;
+    padding: 0.5rem 1rem;
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background: #c82333;
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.25);
+    }
+  }
 }
 
-.previewImage {
-  max-width: 200px;
-  max-height: 200px;
-  object-fit: cover;
-  border-radius: 4px;
-  display: block;
-  margin: 0 auto;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+// Add disabled state styling for submit button
+.submitButton:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 
-.removeImageButton {
-  display: block;
-  margin: 1rem auto 0;
-  padding: 0.5rem 1rem;
-  background: #dc3545;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: background-color 0.2s ease;
-
+// Add hover effect for file input
+input[type="file"] {
   &:hover {
-    background: #c82333;
+    border-color: #007bff;
   }
 
   &:focus {
     outline: none;
-    box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.25);
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
   }
 }

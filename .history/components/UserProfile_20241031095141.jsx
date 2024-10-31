@@ -25,11 +25,6 @@ export default function UserProfile() {
 
   const firstInitial = session.user.username.charAt(0).toUpperCase();
 
-  const handleAddRecipe = () => {
-    setIsOpen(false); // Close dropdown
-    setShowRecipeForm(true); // Show recipe form modal
-  };
-
   return (
     <div className={styles.userProfileContainer} ref={dropdownRef}>
       <button
@@ -42,12 +37,9 @@ export default function UserProfile() {
       {isOpen && (
         <div className={styles.dropdown}>
           <div className={styles.userName}>{session.user.username}</div>
-          <button 
-            onClick={handleAddRecipe}
-            className={styles.dropdownItem}
-          >
+          <Link href="/admin/add-recipe" className={styles.dropdownItem}>
             Add New Recipe
-          </button>
+          </Link>
           <button
             onClick={() => signOut({ redirect: true, callbackUrl: "/" })}
             className={styles.dropdownItem}
@@ -56,18 +48,6 @@ export default function UserProfile() {
           </button>
         </div>
       )}
-
-      <Modal 
-        isOpen={showRecipeForm} 
-        onClose={() => setShowRecipeForm(false)}
-      >
-        <RecipeForm 
-          onSuccess={() => {
-            setShowRecipeForm(false);
-            // Optionally refresh the page or update the recipe list
-          }}
-        />
-      </Modal>
     </div>
   );
 }

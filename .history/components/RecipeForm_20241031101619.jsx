@@ -2,10 +2,6 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import styles from "../styles/RecipeForm.module.scss";
 
-// Add file validation constants
-const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
-const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
-
 export default function RecipeForm({ onSuccess }) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -17,24 +13,7 @@ export default function RecipeForm({ onSuccess }) {
     ingredients: [{ amount: "", unit: "", item: "" }],
   });
   const [image, setImage] = useState(null);
-  const [imagePreview, setImagePreview] = useState(null);
   const [error, setError] = useState("");
-
-  const validateImageFile = (file) => {
-    if (!file) {
-      throw new Error('Please select an image');
-    }
-
-    if (!ACCEPTED_IMAGE_TYPES.includes(file.type)) {
-      throw new Error('File must be a JPEG, PNG or WebP image');
-    }
-
-    if (file.size > MAX_FILE_SIZE) {
-      throw new Error('File size must be less than 5MB');
-    }
-
-    return true;
-  };
 
   const handleIngredientChange = (index, field, value) => {
     const newIngredients = [...formData.ingredients];
@@ -80,14 +59,18 @@ export default function RecipeForm({ onSuccess }) {
     setIsSubmitting(true);
 
     try {
+      // Validate form
       validateForm();
 
+      // Create FormData object
       const submitData = new FormData();
       
+      // Add image
       if (image) {
         submitData.append("image", image);
       }
 
+      // Add other form data
       Object.keys(formData).forEach((key) => {
         if (key === "ingredients") {
           submitData.append(key, JSON.stringify(formData[key]));
@@ -96,6 +79,7 @@ export default function RecipeForm({ onSuccess }) {
         }
       });
 
+      // Debug log
       console.log("Submitting recipe:", {
         ...formData,
         image: image ? image.name : 'No image'
@@ -122,48 +106,6 @@ export default function RecipeForm({ onSuccess }) {
       setError(error.message);
     } finally {
       setIsSubmitting(false);
-    }
-  };
-
-  const handleImageChange = async (e) => {
-    const file = e.target.files[0];
-    
-    try {
-      if (file) {
-        validateImageFile(file);
-        
-        // Create preview
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const img = new Image();
-          img.onload = () => {
-            // Optional: validate dimensions
-            if (img.width < 200 || img.height < 200) {
-              throw new Error('Image must be at least 200x200 pixels');
-            }
-            setImagePreview(e.target.result);
-            setImage(file);
-          };
-          img.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-        
-        console.log("Selected file:", file);
-      }
-    } catch (error) {
-      setError(error.message);
-      setImage(null);
-      setImagePreview(null);
-      e.target.value = ''; // Reset input
-    }
-  };
-
-  const removeImage = () => {
-    setImage(null);
-    setImagePreview(null);
-    const imageInput = document.getElementById('image');
-    if (imageInput) {
-      imageInput.value = '';
     }
   };
 
@@ -201,28 +143,14 @@ export default function RecipeForm({ onSuccess }) {
         <input
           type="file"
           id="image"
-          name="image"
-          className={styles.fileInput}
-          accept={ACCEPTED_IMAGE_TYPES.join(',')}
-          onChange={handleImageChange}
+          accept="image/*"
+          onChange={(e) => {
+            const file = e.target.files[0];
+            console.log("Selected file:", file);
+            setImage(file);
+          }}
           required
         />
-        {imagePreview && (
-          <div className={styles.imagePreview}>
-            <img 
-              src={imagePreview} 
-              alt="Recipe preview" 
-              className={styles.previewImage}
-            />
-            <button 
-              type="button" 
-              onClick={removeImage}
-              className={styles.removeImageButton}
-            >
-              Remove Image
-            </button>
-          </div>
-        )}
       </div>
 
       <div className={styles.formGroup}>

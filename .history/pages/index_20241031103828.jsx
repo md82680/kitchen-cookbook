@@ -107,9 +107,9 @@ export default function Home() {
             imageSrc="/images/dinner.jpg"
           />
           <CategoryCard
-            title="Appetizers/Snacks"
-            link="/appetizers_snacks"
-            imageSrc="/images/appetizers_snacks.jpg"
+            title="Dinner"
+            link="/dinner"
+            imageSrc="/images/dinner.jpg"
           />
           <CategoryCard
             title="Dessert"

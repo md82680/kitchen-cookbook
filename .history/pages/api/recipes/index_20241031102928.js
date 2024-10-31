@@ -27,33 +27,32 @@ const parseForm = async (req) => {
 
 // Helper function to handle file upload
 const handleFileUpload = async (file) => {
-  console.log('Raw file object:', file);
+  console.log('Processing file upload:', {
+    originalFilename: file.originalFilename,
+    size: file.size,
+    type: file.mimetype
+  });
 
-  // Handle array of files if necessary
-  const fileToProcess = Array.isArray(file) ? file[0] : file;
-  
-  if (!fileToProcess || !fileToProcess.filepath) {
-    console.error('Invalid file object received:', fileToProcess);
+  if (!file || !file.originalFilename) {
     throw new Error('Invalid file object');
   }
 
   const uploadDir = path.join(process.cwd(), "public/images/recipes");
   await fs.mkdir(uploadDir, { recursive: true });
 
-  // Get original filename or generate one
-  const originalFilename = fileToProcess.originalFilename || 'uploaded-file';
-  const fileExt = path.extname(originalFilename);
+  const fileExt = path.extname(file.originalFilename || '');
   const uniqueFilename = `recipe-${Date.now()}${fileExt}`;
   const finalPath = path.join(uploadDir, uniqueFilename);
 
   try {
-    await fs.copyFile(fileToProcess.filepath, finalPath);
-    await fs.unlink(fileToProcess.filepath); // Clean up the temp file
+    // Use copyFile instead of rename for better cross-device compatibility
+    await fs.copyFile(file.filepath, finalPath);
+    await fs.unlink(file.filepath); // Clean up the temp file
 
     console.log('File uploaded successfully:', uniqueFilename);
     return {
       imageUrl: `/images/recipes/${uniqueFilename}`,
-      imageName: originalFilename,
+      imageName: file.originalFilename,
     };
   } catch (error) {
     console.error('File upload error:', error);
@@ -90,14 +89,13 @@ export default async function handler(req, res) {
       // Parse the multipart form data
       console.log("Parsing form data");
       const { fields, files } = await parseForm(req);
-      
-      // Debug log the entire files object
-      console.log("Files received:", JSON.stringify(files, null, 2));
+      console.log("Form data parsed:", {
+        fields: { ...fields, ingredients: JSON.parse(fields.ingredients || "[]") },
+        files: Object.keys(files)
+      });
 
       // Parse ingredients from form data
-      const ingredients = Array.isArray(fields.ingredients) 
-        ? JSON.parse(fields.ingredients[0] || "[]")
-        : JSON.parse(fields.ingredients || "[]");
+      const ingredients = JSON.parse(fields.ingredients || "[]");
 
       // Handle image upload if a file was provided
       let imageData = {
@@ -123,20 +121,12 @@ export default async function handler(req, res) {
       console.log("Creating recipe");
       const recipe = await prisma.recipe.create({
         data: {
-          recipeTitle: Array.isArray(fields.recipeTitle) 
-            ? fields.recipeTitle[0] 
-            : fields.recipeTitle,
-          recipeDescription: Array.isArray(fields.recipeDescription)
-            ? fields.recipeDescription[0]
-            : fields.recipeDescription,
+          recipeTitle: fields.recipeTitle,
+          recipeDescription: fields.recipeDescription,
           recipeImage: imageData.imageUrl,
           imageName: imageData.imageName,
-          recipeCategory: Array.isArray(fields.recipeCategory)
-            ? fields.recipeCategory[0]
-            : fields.recipeCategory,
-          recipeInstructions: Array.isArray(fields.recipeInstructions)
-            ? fields.recipeInstructions[0]
-            : fields.recipeInstructions,
+          recipeCategory: fields.recipeCategory,
+          recipeInstructions: fields.recipeInstructions,
           authorId: user.id,
           ingredients: {
             create: ingredients.map((ing) => ({
@@ -163,17 +153,88 @@ export default async function handler(req, res) {
     // Handle unsupported methods
     res.setHeader("Allow", ["GET", "POST"]);
     return res.status(405).end(`Method ${req.method} Not Allowed`);
+      try {
+        const session = await getSession({ req });
+        if (!session) {
+          return res.status(401).json({ error: "Not authenticated" });
+        }
+
+        // Parse the multipart form data
+        const { fields, files } = await parseForm(req);
+
+        console.log('Files received:', files);
+        console.log('Fields received:', fields);
+
+        // Parse ingredients from form data
+        const ingredients = JSON.parse(fields.ingredients || "[]");
+
+        // Validate the data
+        validateRecipeData(fields, ingredients);
+
+        // Handle image upload if a file was provided
+        let imageData = {
+          imageUrl: "/images/default-recipe.jpg",
+          imageName: null,
+        };
+        if (files && files.image) {
+          imageData = await handleFileUpload(files.image);
+        }
+
+        // Get user
+        const user = await prisma.user.findUnique({
+          where: { username: session.user.username },
+        });
+
+        if (!user) {
+          return res.status(404).json({ error: "User not found" });
+        }
+
+        // Create recipe with all data
+        const recipe = await prisma.recipe.create({
+          data: {
+            recipeTitle: fields.recipeTitle,
+            recipeDescription: fields.recipeDescription,
+            recipeImage: imageData.imageUrl,
+            imageName: imageData.imageName,
+            recipeCategory: fields.recipeCategory,
+            recipeInstructions: fields.recipeInstructions,
+            authorId: user.id,
+            ingredients: {
+              create: ingredients.map((ing) => ({
+                amount: ing.amount,
+                unit: ing.unit,
+                item: ing.item,
+              })),
+            },
+          },
+          include: {
+            ingredients: true,
+            author: {
+              select: {
+                username: true,
+              },
+            },
+          },
+        });
+
+        return res.status(201).json(recipe);
+      } catch (error) {
+        console.error('Submit error:', error);
+        return res.status(500).json({
+          error: 'Internal server error',
+          message: error.message,
+        });
+      }
+    }
+
+    // Handle unsupported methods
+    res.setHeader("Allow", ["GET", "POST"]);
+    return res.status(405).end(`Method ${req.method} Not Allowed`);
   } catch (error) {
-    console.error("API Error:", {
-      message: error.message,
-      stack: error.stack,
-      name: error.name
-    });
-    
+    console.error("API Error:", error);
     return res.status(500).json({
       error: "Internal server error",
       message: error.message,
-      details: process.env.NODE_ENV === 'development' ? error.stack : undefined
     });
   }
 }

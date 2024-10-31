@@ -123,20 +123,12 @@ export default async function handler(req, res) {
       console.log("Creating recipe");
       const recipe = await prisma.recipe.create({
         data: {
-          recipeTitle: Array.isArray(fields.recipeTitle) 
-            ? fields.recipeTitle[0] 
-            : fields.recipeTitle,
-          recipeDescription: Array.isArray(fields.recipeDescription)
-            ? fields.recipeDescription[0]
-            : fields.recipeDescription,
+          recipeTitle: fields.recipeTitle,
+          recipeDescription: fields.recipeDescription,
           recipeImage: imageData.imageUrl,
           imageName: imageData.imageName,
-          recipeCategory: Array.isArray(fields.recipeCategory)
-            ? fields.recipeCategory[0]
-            : fields.recipeCategory,
-          recipeInstructions: Array.isArray(fields.recipeInstructions)
-            ? fields.recipeInstructions[0]
-            : fields.recipeInstructions,
+          recipeCategory: fields.recipeCategory,
+          recipeInstructions: fields.recipeInstructions,
           authorId: user.id,
           ingredients: {
             create: ingredients.map((ing) => ({

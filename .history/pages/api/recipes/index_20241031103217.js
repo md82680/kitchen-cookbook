@@ -42,18 +42,19 @@ const handleFileUpload = async (file) => {
 
   // Get original filename or generate one
   const originalFilename = fileToProcess.originalFilename || 'uploaded-file';
-  const fileExt = path.extname(originalFilename);
+  const fileExt = path.extname(file.originalFilename || '');
   const uniqueFilename = `recipe-${Date.now()}${fileExt}`;
   const finalPath = path.join(uploadDir, uniqueFilename);
 
   try {
-    await fs.copyFile(fileToProcess.filepath, finalPath);
-    await fs.unlink(fileToProcess.filepath); // Clean up the temp file
+    // Use copyFile instead of rename for better cross-device compatibility
+    await fs.copyFile(file.filepath, finalPath);
+    await fs.unlink(file.filepath); // Clean up the temp file
 
     console.log('File uploaded successfully:', uniqueFilename);
     return {
       imageUrl: `/images/recipes/${uniqueFilename}`,
-      imageName: originalFilename,
+      imageName: file.originalFilename,
     };
   } catch (error) {
     console.error('File upload error:', error);
@@ -90,14 +91,13 @@ export default async function handler(req, res) {
       // Parse the multipart form data
       console.log("Parsing form data");
       const { fields, files } = await parseForm(req);
-      
-      // Debug log the entire files object
-      console.log("Files received:", JSON.stringify(files, null, 2));
+      console.log("Form data parsed:", {
+        fields: { ...fields, ingredients: JSON.parse(fields.ingredients || "[]") },
+        files: Object.keys(files)
+      });
 
       // Parse ingredients from form data
-      const ingredients = Array.isArray(fields.ingredients) 
-        ? JSON.parse(fields.ingredients[0] || "[]")
-        : JSON.parse(fields.ingredients || "[]");
+      const ingredients = JSON.parse(fields.ingredients || "[]");
 
       // Handle image upload if a file was provided
       let imageData = {
@@ -123,20 +123,12 @@ export default async function handler(req, res) {
       console.log("Creating recipe");
       const recipe = await prisma.recipe.create({
         data: {
-          recipeTitle: Array.isArray(fields.recipeTitle) 
-            ? fields.recipeTitle[0] 
-            : fields.recipeTitle,
-          recipeDescription: Array.isArray(fields.recipeDescription)
-            ? fields.recipeDescription[0]
-            : fields.recipeDescription,
+          recipeTitle: fields.recipeTitle,
+          recipeDescription: fields.recipeDescription,
           recipeImage: imageData.imageUrl,
           imageName: imageData.imageName,
-          recipeCategory: Array.isArray(fields.recipeCategory)
-            ? fields.recipeCategory[0]
-            : fields.recipeCategory,
-          recipeInstructions: Array.isArray(fields.recipeInstructions)
-            ? fields.recipeInstructions[0]
-            : fields.recipeInstructions,
+          recipeCategory: fields.recipeCategory,
+          recipeInstructions: fields.recipeInstructions,
           authorId: user.id,
           ingredients: {
             create: ingredients.map((ing) => ({
