@@ -310,7 +310,11 @@ $text-color: white;
 
     &:hover {
         transform: translateY(-5px) scale(1.1);
-        background: var(--color-primary);
+        background: linear-gradient(
+            135deg,
+            var(--color-primary) 0%,
+            var(--color-secondary) 100%
+        );
         box-shadow: var(--shadow-lg);
 
         .icon svg {
@@ -319,10 +323,11 @@ $text-color: white;
         }
 
         .buttonText {
-            opacity: .4;
+            opacity: 1;
             transform: translate(-50%, 0);
             color: var(--color-text);
-            font-weight: 900;
+            font-weight: 700;
+            text-shadow: none;
         }
     }
 

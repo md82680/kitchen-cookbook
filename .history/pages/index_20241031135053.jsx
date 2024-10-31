@@ -88,12 +88,12 @@ export default function Home() {
       <div className={styles.recipeSection} id="recipes">
         <h2>Recipes</h2>
         {session && (
-          <Link href="/admin/add-recipe" className={styles.addRecipeButton}>
-            <span className={styles.icon}>
-              <FaUtensils />
-            </span>
-            <span className={styles.buttonText}>Add Recipe</span>
-          </Link>
+          <div className={styles.addRecipeWrapper}>
+            <Link href="/admin/add-recipe" className={styles.addRecipeButton}>
+              <div className={styles.utensils}></div>
+              <span className={styles.buttonText}>Add Recipe</span>
+            </Link>
+          </div>
         )}
         <SearchBar recipes={recipes} />
         <div className={styles.categoryCards}>
