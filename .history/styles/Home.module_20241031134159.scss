@@ -206,39 +206,18 @@ $text-color: white;
     );
     color: var(--color-text);
     padding: 6rem 2rem;
+    background: linear-gradient(135deg, #A4B8D4 0%, rgb(208, 213, 222) 100%);
+    color: #1a1f3e;
+    padding: 4rem 2rem; 
     text-align: center;
-    position: relative;
-
-    &::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(
-            45deg,
-            rgba(230, 184, 156, 0.05) 0%,
-            rgba(156, 175, 136, 0.05) 100%
-        );
-        pointer-events: none;
-    }
-
-    h2 {
-        font-family: var(--font-primary);
-        font-size: clamp(2rem, 4vw, 3rem);
-        color: var(--color-text);
-        margin-bottom: 2rem;
-    }
 
     .categoryCards {
+        // Changed from .recipeCards to .categoryCards
         display: flex;
         justify-content: center;
         gap: 2rem;
-        flex-wrap: wrap;
-        margin-top: 3rem;
-        position: relative;
-        z-index: 1;
+        flex-wrap: wrap; // Add this to allow wrapping on smaller screens
+        margin-top: 2rem; // Add some space above the cards
     }
 }
 
