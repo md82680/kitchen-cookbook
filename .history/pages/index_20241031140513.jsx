@@ -92,7 +92,7 @@ export default function Home() {
             <span className={styles.icon}>
               <FaUtensils />
             </span>
-          </Link>
+                      </Link>
         )}
         <SearchBar recipes={recipes} />
         <div className={styles.categoryCards}>

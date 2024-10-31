@@ -92,6 +92,7 @@ export default function Home() {
             <span className={styles.icon}>
               <FaUtensils />
             </span>
+            
           </Link>
         )}
         <SearchBar recipes={recipes} />
