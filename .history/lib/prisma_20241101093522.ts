@@ -8,14 +8,12 @@ const prismaClientSingleton = () => {
   return new PrismaClient({
     datasources: {
       db: {
-        url: process.env.POSTGRES_PRISMA_URL + "?sslmode=require",
+        url: process.env.POSTGRES_PRISMA_URL,
       },
     },
     log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
   });
 };
-
-let prisma: PrismaClient;
 
 if (process.env.NODE_ENV === 'production') {
   prisma = prismaClientSingleton();
@@ -26,15 +24,14 @@ if (process.env.NODE_ENV === 'production') {
   prisma = global.prisma;
 }
 
+// Handle connection errors
 prisma.$connect()
   .then(() => {
     console.log('Successfully connected to database');
   })
   .catch((e) => {
     console.error('Failed to connect to database:', e);
-    console.error('Database URL:', process.env.POSTGRES_PRISMA_URL ? 'URL is set' : 'URL is missing');
-    console.error('Environment:', process.env.NODE_ENV);
-    process.exit(1);
+    process.exit(1); // Exit if we can't connect to the database
   });
 
 export default prisma;

@@ -8,7 +8,10 @@ const prismaClientSingleton = () => {
   return new PrismaClient({
     datasources: {
       db: {
-        url: process.env.POSTGRES_PRISMA_URL + "?sslmode=require",
+        url: process.env.POSTGRES_PRISMA_URL,
+        ssl: {
+          rejectUnauthorized: true
+        }
       },
     },
     log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
