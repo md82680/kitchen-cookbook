@@ -8,6 +8,11 @@ const prismaConfig = {
   datasources: {
     db: {
       url: process.env.POSTGRES_PRISMA_URL + "?sslmode=require&pool_timeout=0"
+    },
+  },
+  connection: {
+    ssl: {
+      rejectUnauthorized: false
     }
   }
 };

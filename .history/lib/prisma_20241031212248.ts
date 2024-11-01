@@ -8,6 +8,11 @@ const prismaConfig = {
   datasources: {
     db: {
       url: process.env.POSTGRES_PRISMA_URL + "?sslmode=require&pool_timeout=0"
+    },
+  },
+  connection: {
+    ssl: {
+      rejectUnauthorized: false
     }
   }
 };
@@ -16,9 +21,6 @@ let prisma: PrismaClient;
 
 if (process.env.NODE_ENV === "production") {
   prisma = new PrismaClient(prismaConfig);
-  prisma.$connect()
-    .then(() => console.log('Successfully connected to database'))
-    .catch((e) => console.error('Failed to connect to database:', e));
 } else {
   if (!global.prisma) {
     global.prisma = new PrismaClient(prismaConfig);
