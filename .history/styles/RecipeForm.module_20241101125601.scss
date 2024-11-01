@@ -47,17 +47,6 @@
         // Adjust the add/remove buttons
         .addRemoveButtons {
           display: flex;
-          gap: 0.5rem;
-          margin-top: 0.5rem;
-          
-          button {
-            flex: 1;
-            padding: 0.5rem;
-          }
-        }
-      }
-    }
-
     &:has(#recipeTitle),
     &:has(#recipeDescription),
     &:has(#recipeInstructions) {
