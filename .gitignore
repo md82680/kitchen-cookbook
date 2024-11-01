@@ -10,9 +10,6 @@
 /.next/
 /out/
 
-# Production
-/build
-
 # Environment Variables
 .env
 .env.local
@@ -32,11 +29,6 @@ yarn-error.log*
 *.swp
 *.swo
 .DS_Store
-
-# Config files
-postcss.config.js
-postcss.config 2.js
-tailwind.config.js
 
 # Misc
 *.pem
