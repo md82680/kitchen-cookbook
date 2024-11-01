@@ -11,14 +11,7 @@
     margin-bottom: 1.5rem;
 
     &:has(.ingredientRow) {
-      max-width: 800px;
-    }
-
-    &:has(#recipeTitle),
-    &:has(#recipeDescription),
-    &:has(#recipeInstructions) {
       max-width: 400px;
-      margin: 0 auto;
     }
   }
 
@@ -33,7 +26,6 @@
   input,
   textarea,
   select {
-    max-width: 800px;
     width: 100%;
     padding: 0.75rem 1rem;
     border: 2px solid transparent;
@@ -259,12 +251,6 @@
     &:active {
       transform: translateY(0);
     }
-  }
-
-  .narrowInput {
-    max-width: 765px !important;
-    margin: 0 auto;
-    display: block;
   }
 }
 

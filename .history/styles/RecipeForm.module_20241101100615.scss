@@ -45,6 +45,7 @@
     box-shadow: var(--shadow-sm);
     transition: all 0.3s ease;
 
+    // Specifically target title, description, and instructions
     &:focus {
       outline: none;
       border-color: var(--color-primary);

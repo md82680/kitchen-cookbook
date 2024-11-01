@@ -13,13 +13,6 @@
     &:has(.ingredientRow) {
       max-width: 800px;
     }
-
-    &:has(#recipeTitle),
-    &:has(#recipeDescription),
-    &:has(#recipeInstructions) {
-      max-width: 400px;
-      margin: 0 auto;
-    }
   }
 
   label {
@@ -44,6 +37,13 @@
     font-size: 1rem;
     box-shadow: var(--shadow-sm);
     transition: all 0.3s ease;
+
+    // Specifically target title, description, and instructions
+    &#recipeTitle,
+    &#recipeDescription,
+    &#recipeInstructions {
+      max-width: 400px; !imp// Adjust this value to match your buttons
+    }
 
     &:focus {
       outline: none;
@@ -259,12 +259,6 @@
     &:active {
       transform: translateY(0);
     }
-  }
-
-  .narrowInput {
-    max-width: 765px !important;
-    margin: 0 auto;
-    display: block;
   }
 }
 

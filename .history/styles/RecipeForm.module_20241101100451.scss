@@ -45,6 +45,14 @@
     box-shadow: var(--shadow-sm);
     transition: all 0.3s ease;
 
+    // Specifically target title, description, and instructions
+    input#recipeTitle,
+    textarea#recipeDescription,
+    textarea#recipeInstructions {
+      max-width: 400px !important;
+      width: 100%;
+    }
+
     &:focus {
       outline: none;
       border-color: var(--color-primary);
@@ -262,7 +270,7 @@
   }
 
   .narrowInput {
-    max-width: 765px !important;
+    max-width: 400px !important;
     margin: 0 auto;
     display: block;
   }

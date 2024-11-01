@@ -302,7 +302,6 @@ export default function RecipeForm({ onSuccess }) {
         <label htmlFor="recipeInstructions">Instructions</label>
         <textarea
           id="recipeInstructions"
-          className={styles.narrowInput}
           value={formData.recipeInstructions}
           onChange={(e) =>
             setFormData({ ...formData, recipeInstructions: e.target.value })

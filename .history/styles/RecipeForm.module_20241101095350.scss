@@ -9,16 +9,13 @@
 
   .formGroup {
     margin-bottom: 1.5rem;
+    width: 100%;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
 
     &:has(.ingredientRow) {
       max-width: 800px;
-    }
-
-    &:has(#recipeTitle),
-    &:has(#recipeDescription),
-    &:has(#recipeInstructions) {
-      max-width: 400px;
-      margin: 0 auto;
     }
   }
 
@@ -33,8 +30,8 @@
   input,
   textarea,
   select {
-    max-width: 800px;
     width: 100%;
+    max-width: 400px;
     padding: 0.75rem 1rem;
     border: 2px solid transparent;
     border-radius: 8px;
@@ -232,6 +229,9 @@
   }
 
   .formActions {
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -259,12 +259,6 @@
     &:active {
       transform: translateY(0);
     }
-  }
-
-  .narrowInput {
-    max-width: 765px !important;
-    margin: 0 auto;
-    display: block;
   }
 }
 
