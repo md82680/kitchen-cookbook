@@ -1,5 +1,3 @@
-@import './mixins';
-
 // Variables for colors
 $primary-color: #333;
 $text-color: white;
@@ -283,16 +281,6 @@ $text-color: white;
         margin-top: 3rem;
         position: relative;
         z-index: 1;
-    }
-
-    @include mobile {
-        padding: 3rem 1rem;
-        
-        .categoryCards {
-            flex-direction: column;
-            align-items: center;
-            gap: 2rem;
-        }
     }
 }
 
