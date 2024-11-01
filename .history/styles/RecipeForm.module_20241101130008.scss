@@ -12,43 +12,11 @@
   .formGroup {
     margin-bottom: 1.5rem;
 
-    &.narrowMobile {
-      @include mobile {
-        width: 100%;
-        margin-left: auto;
-        margin-right: auto;
-
-        .narrowInput {
-          width: 100%;
-          max-width: 100%;
-          box-sizing: border-box;
-        }
-      }
-    }
-
-    &.narrow {
-      @include mobile {
-        width: 100%;
-        max-width: 100%;
-        padding: 0 1rem;
-
-        input,
-        textarea {
-          width: 100%;
-          max-width: 100%;
-        }
-
-        textarea {
-          min-height: 100px;
-        }
-      }
-    }
-
     &:has(.ingredientRow) {
       max-width: 800px;
 
       @include mobile {
-        width: 90%;
+        width: %;
         padding: 0 1rem;
         
         .ingredientRow {
@@ -338,8 +306,7 @@
   }
 
   .narrowInput {
-    max-width: 600px;
-    width: 100%;
+    max-width: 765px !important;
     margin: 0 auto;
     display: block;
   }
@@ -365,16 +332,6 @@
       button {
         padding: 0.8rem;
       }
-    }
-  }
-
-  input[name="recipeTitle"],
-  textarea[name="recipeDescription"],
-  textarea[name="recipeInstructions"] {
-    @include mobile {
-      width: 100%;
-      max-width: 100%;
-      box-sizing: border-box;
     }
   }
 }

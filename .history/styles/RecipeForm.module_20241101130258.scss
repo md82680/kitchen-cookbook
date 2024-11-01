@@ -12,20 +12,6 @@
   .formGroup {
     margin-bottom: 1.5rem;
 
-    &.narrowMobile {
-      @include mobile {
-        width: 100%;
-        margin-left: auto;
-        margin-right: auto;
-
-        .narrowInput {
-          width: 100%;
-          max-width: 100%;
-          box-sizing: border-box;
-        }
-      }
-    }
-
     &.narrow {
       @include mobile {
         width: 100%;
@@ -34,7 +20,7 @@
 
         input,
         textarea {
-          width: 100%;
+          width: 10%;
           max-width: 100%;
         }
 
@@ -338,8 +324,7 @@
   }
 
   .narrowInput {
-    max-width: 600px;
-    width: 100%;
+    max-width: 765px !important;
     margin: 0 auto;
     display: block;
   }
