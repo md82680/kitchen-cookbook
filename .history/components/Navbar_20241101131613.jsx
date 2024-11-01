@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
-import { useRouter } from 'next/router';
 import styles from "../styles/Navbar.module.scss";
 import LoginForm from "./LoginForm";
 import UserProfile from "./UserProfile";
@@ -9,28 +8,9 @@ import UserProfile from "./UserProfile";
 export default function Navbar() {
   const [showLoginForm, setShowLoginForm] = useState(false);
   const { data: session, status } = useSession();
-  const router = useRouter();
 
   const toggleLoginForm = () => {
     setShowLoginForm(!showLoginForm);
-  };
-
-  const handleScroll = (e, id) => {
-    e.preventDefault();
-    
-    // Only handle scroll on home page
-    if (router.pathname === '/') {
-      const element = document.getElementById(id);
-      if (element) {
-        element.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-      }
-    } else {
-      // If not on home page, navigate to home page with hash
-      router.push(`/#${id}`);
-    }
   };
 
   const scrollToTop = () => {
@@ -44,25 +24,13 @@ export default function Navbar() {
     <nav className={`${styles.navbar} ${styles.sticky}`}>
       <ul>
         <li>
-          <a 
-            href="/" 
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToTop();
-            }}
-          >
-            Home
-          </a>
+          <Link href="/#home">Home</Link>
         </li>
         <li>
-          <a href="#about" onClick={(e) => handleScroll(e, 'about')}>
-            About
-          </a>
+          <Link href="/#about">About</Link>
         </li>
         <li>
-          <a href="#recipes" onClick={(e) => handleScroll(e, 'recipes')}>
-            Recipes
-          </a>
+          <Link href="/#recipes">Recipes</Link>
         </li>
         <li>
           {session ? (

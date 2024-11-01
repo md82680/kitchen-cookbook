@@ -55,14 +55,14 @@ export default function Navbar() {
           </a>
         </li>
         <li>
-          <a href="#about" onClick={(e) => handleScroll(e, 'about')}>
+          <Link href="#about" scroll={false}>
             About
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="#recipes" onClick={(e) => handleScroll(e, 'recipes')}>
+          <Link href="#recipes" scroll={false}>
             Recipes
-          </a>
+          </Link>
         </li>
         <li>
           {session ? (
