@@ -8,7 +8,6 @@
     animation: scaleIn 0.6s ease-out forwards;
     margin: 20px auto 0;
     transform-style: preserve-3d;
-    transform-origin: center center;
 
     @include tablet {
         width: 85%;
@@ -20,10 +19,10 @@
         width: 95%;
         height: auto;
         min-height: 500px;
-        margin-top: 80px;
-        padding: 1px 0.5rem;
-        transform: translateX(8%);
-        transform-origin: center center;
+        margin: 80px auto 0;
+        padding: 0;
+        left: 50%;
+        transform: translateX(-50%);
     }
 
     &.flipped .cardInner {
@@ -31,50 +30,20 @@
     }
 
     &.mobile {
-        margin-top: 80px;
-        padding: 0.5rem;
-        
         .cardInner {
             min-height: 450px;
+            transform-origin: center;
+            position: relative;
+            left: 0;
+            width: 100%;
         }
 
         .cardFront, .cardBack {
             padding: 0.8rem;
-        }
-
-        .content {
-            h3 {
-                font-size: 1.5rem;
-                margin-bottom: 0.5rem;
-            }
-
-            p {
-                font-size: 0.9rem;
-                margin-bottom: 1rem;
-            }
-
-            .ingredients {
-                h4 {
-                    font-size: 1.2rem;
-                    margin-bottom: 0.8rem;
-                }
-
-                ul li {
-                    font-size: 0.9rem;
-                    margin-bottom: 0.3rem;
-                }
-            }
-
-            .instructions {
-                h4 {
-                    font-size: 1.2rem;
-                    margin-bottom: 0.8rem;
-                }
-
-                p {
-                    font-size: 0.9rem;
-                }
-            }
+            position: absolute;
+            left: 0;
+            width: 100%;
+            margin: 0 auto;
         }
     }
 }
@@ -85,7 +54,13 @@
     height: 100%;
     transform-style: preserve-3d;
     transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    transform-origin: center center;
+
+    @include mobile {
+        transform-origin: center;
+        position: relative;
+        left: 0;
+        width: 100%;
+    }
 }
 
 .cardFront,
@@ -98,7 +73,17 @@
     overflow: hidden;
     box-shadow: var(--shadow-md);
     background: white;
-    transform-origin: center center;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+
+    @include mobile {
+        position: absolute;
+        width: 100%;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+    }
 }
 
 .cardBack {

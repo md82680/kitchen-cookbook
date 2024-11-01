@@ -3,12 +3,12 @@ import Navbar2 from "../components/Navbar2";
 import RecipeDetailCard from "../components/RecipeDetailCard";
 import styles from "../styles/RecipePage.module.scss";
 
-export default function AppetizersSnacks() {
+export default function Dinner() {
   const [recipes, setRecipes] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [isMobile, setIsMobile] = useState(false); // Add mobile state
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -24,7 +24,7 @@ export default function AppetizersSnacks() {
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const response = await fetch('/api/recipes/SNACK_APPETIZER');
+        const response = await fetch('/api/recipes/DINNER');
         if (!response.ok) {
           throw new Error('Failed to fetch recipes');
         }
@@ -57,19 +57,16 @@ export default function AppetizersSnacks() {
   return (
     <>
       <Navbar2 />
-      <div className={`${styles.container} ${isMobile ? styles.mobile : ''}`}>
-        <h2 className={styles.title}>Appetizers/Snacks Recipes</h2>
-        <div className={styles.pageWrapper}>
-          <div className={`${styles.carouselContainer} ${isMobile ? styles.mobile : ''}`}>
-            <RecipeDetailCard 
-              title={recipes[currentIndex].recipeTitle}
-              description={recipes[currentIndex].recipeDescription}
-              image={recipes[currentIndex].recipeImage}
-              instructions={recipes[currentIndex].recipeInstructions}
-              ingredients={recipes[currentIndex].ingredients}
-              isMobile={isMobile}
-            />
-          </div>
+      <div className={styles.container}>
+        <h2 className={styles.title}>Dinner Recipes</h2>
+        <div className={styles.carouselContainer}>
+          <RecipeDetailCard 
+            title={recipes[currentIndex].recipeTitle}
+            description={recipes[currentIndex].recipeDescription}
+            image={recipes[currentIndex].recipeImage}
+            instructions={recipes[currentIndex].recipeInstructions}
+            ingredients={recipes[currentIndex].ingredients}
+          />
           <div className={styles.buttonContainer}>
             <button 
               className={styles.carouselButton} 

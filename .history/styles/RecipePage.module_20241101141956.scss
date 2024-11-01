@@ -1,0 +1,79 @@
+@import './mixins';
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+
+    @include mobile {
+        padding-top: 100px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+
+.title {
+    text-align: center;
+    color: var(--color-text);
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    font-family: var(--font-primary);
+
+    @include mobile {
+        font-size: 1.8rem;
+        margin-top: 20px;
+        margin-bottom: 1.5rem;
+    }
+}
+
+.carouselContainer {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 1rem;
+    
+    @include tablet {
+        gap: 1.5rem;
+        padding: 0.8rem;
+    }
+    
+    @include mobile {
+        gap: 1rem;
+        padding: 0.5rem;
+        flex-direction: column;
+    }
+}
+
+.carouselButton {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    
+    @include tablet {
+        font-size: 1.8rem;
+    }
+    
+    @include mobile {
+        font-size: 1.5rem;
+        padding: 0.5rem;
+    }
+
+    &:hover {
+        color: #007bff;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

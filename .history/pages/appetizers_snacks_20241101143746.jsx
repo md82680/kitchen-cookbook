@@ -59,17 +59,15 @@ export default function AppetizersSnacks() {
       <Navbar2 />
       <div className={`${styles.container} ${isMobile ? styles.mobile : ''}`}>
         <h2 className={styles.title}>Appetizers/Snacks Recipes</h2>
-        <div className={styles.pageWrapper}>
-          <div className={`${styles.carouselContainer} ${isMobile ? styles.mobile : ''}`}>
-            <RecipeDetailCard 
-              title={recipes[currentIndex].recipeTitle}
-              description={recipes[currentIndex].recipeDescription}
-              image={recipes[currentIndex].recipeImage}
-              instructions={recipes[currentIndex].recipeInstructions}
-              ingredients={recipes[currentIndex].ingredients}
-              isMobile={isMobile}
-            />
-          </div>
+        <div className={`${styles.carouselContainer} ${isMobile ? styles.mobile : ''}`}>
+          <RecipeDetailCard 
+            title={recipes[currentIndex].recipeTitle}
+            description={recipes[currentIndex].recipeDescription}
+            image={recipes[currentIndex].recipeImage}
+            instructions={recipes[currentIndex].recipeInstructions}
+            ingredients={recipes[currentIndex].ingredients}
+            isMobile={isMobile}
+          />
           <div className={styles.buttonContainer}>
             <button 
               className={styles.carouselButton} 

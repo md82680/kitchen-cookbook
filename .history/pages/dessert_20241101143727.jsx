@@ -3,7 +3,7 @@ import Navbar2 from "../components/Navbar2";
 import RecipeDetailCard from "../components/RecipeDetailCard";
 import styles from "../styles/RecipePage.module.scss";
 
-export default function AppetizersSnacks() {
+export default function Dessert() {
   const [recipes, setRecipes] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -24,7 +24,7 @@ export default function AppetizersSnacks() {
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const response = await fetch('/api/recipes/SNACK_APPETIZER');
+        const response = await fetch('/api/recipes/DESSERT');
         if (!response.ok) {
           throw new Error('Failed to fetch recipes');
         }
@@ -58,18 +58,16 @@ export default function AppetizersSnacks() {
     <>
       <Navbar2 />
       <div className={`${styles.container} ${isMobile ? styles.mobile : ''}`}>
-        <h2 className={styles.title}>Appetizers/Snacks Recipes</h2>
-        <div className={styles.pageWrapper}>
-          <div className={`${styles.carouselContainer} ${isMobile ? styles.mobile : ''}`}>
-            <RecipeDetailCard 
-              title={recipes[currentIndex].recipeTitle}
-              description={recipes[currentIndex].recipeDescription}
-              image={recipes[currentIndex].recipeImage}
-              instructions={recipes[currentIndex].recipeInstructions}
-              ingredients={recipes[currentIndex].ingredients}
-              isMobile={isMobile}
-            />
-          </div>
+        <h2 className={styles.title}>Dessert Recipes</h2>
+        <div className={`${styles.carouselContainer} ${isMobile ? styles.mobile : ''}`}>
+          <RecipeDetailCard 
+            title={recipes[currentIndex].recipeTitle}
+            description={recipes[currentIndex].recipeDescription}
+            image={recipes[currentIndex].recipeImage}
+            instructions={recipes[currentIndex].recipeInstructions}
+            ingredients={recipes[currentIndex].ingredients}
+            isMobile={isMobile}
+          />
           <div className={styles.buttonContainer}>
             <button 
               className={styles.carouselButton} 
