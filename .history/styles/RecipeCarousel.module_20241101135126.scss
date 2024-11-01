@@ -1,0 +1,73 @@
+@import './mixins';
+
+.carouselContainer {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 0 2rem;
+
+    &.mobile {
+        @include mobile {
+            padding: 0 10rem;
+            gap: 0.5rem;
+        }
+    }
+}
+
+.cardContainer {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+}
+
+.arrowButton {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 24px;
+    color: var(--color-text);
+    z-index: 100;
+
+    .mobile & {
+        width: 35px;
+        height: 35px;
+        background: white;
+        border-radius: 50%;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        font-size: 20px;
+        position: relative;
+        display: flex !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+}
+
+.leftArrow {
+    .mobile & {
+        left: 0;
+    }
+}
+
+.rightArrow {
+    .mobile & {
+        right: 0;
+    }
+}
+
+// Debug styles - remove after testing
+.mobile {
+    .arrowButton {
+        background: red !important;
+    }
+}

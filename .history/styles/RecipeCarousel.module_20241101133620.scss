@@ -1,0 +1,44 @@
+@import './mixins';
+
+.carouselContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 0 1rem;
+
+    @include mobile {
+        gap: 8px;
+        padding: 0 0.5rem;
+    }
+}
+
+.cardContainer {
+    width: 300px;
+    height: 400px;
+
+    @include mobile {
+        width: 240px;
+        height: 280px;
+    }
+}
+
+.arrowButton {
+    font-size: 2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s;
+    padding: 0.5rem;
+    z-index: 2;
+
+    &:hover {
+        color: #007bff;
+    }
+
+    @include mobile {
+        font-size: 1.5rem;
+        padding: 0.3rem;
+        margin: 0 0.5rem;
+    }
+}

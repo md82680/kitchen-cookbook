@@ -1,0 +1,71 @@
+@import './mixins';
+
+.carouselContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 40px;
+
+    @include mobile {
+        padding: 0 10px;
+        min-width: 100%;
+        overflow: visible;
+    }
+}
+
+.cardContainer {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @include mobile {
+        margin: 0 35px;
+    }
+}
+
+.arrowButton {
+    position: relative;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 2rem;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @include mobile {
+        font-size: 1.8rem;
+        width: 30px;
+        height: 30px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 50%;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        flex-shrink: 0;
+        position: relative;
+        display: block !important;
+    }
+
+    &:hover {
+        color: var(--color-primary);
+    }
+}
+
+.prevButton {
+    @include mobile {
+        left: 0;
+        margin-right: 5px;
+        opacity: 1 !important;
+    }
+}
+
+.nextButton {
+    @include mobile {
+        right: 0;
+        margin-left: 5px;
+        opacity: 1 !important;
+    }
+}

@@ -10,8 +10,10 @@ export default function RecipeCarousel({ recipes }) {
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768);
     };
+    
     checkMobile();
     window.addEventListener('resize', checkMobile);
+    
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
@@ -26,31 +28,26 @@ export default function RecipeCarousel({ recipes }) {
   };
 
   return (
-    <div className={`${styles.carouselWrapper} ${isMobile ? styles.mobile : ''}`}>
+    <div className={`${styles.carouselContainer} ${isMobile ? styles.mobile : ''}`}>
+      <button 
+        type="button"
+        className={`${styles.arrowButton} ${styles.leftArrow}`} 
+        onClick={prevRecipe}
+      >
+        ←
+      </button>
+      
       <div className={styles.cardContainer}>
         <RecipeCard {...recipes[currentIndex]} />
       </div>
       
-      <div className={styles.navigationButtons}>
-        <div className={styles.arrowsContainer}>
-          <button 
-            type="button"
-            className={`${styles.arrowButton} ${styles.prevArrow}`}
-            onClick={prevRecipe}
-            aria-label="Previous recipe"
-          >
-            ←
-          </button>
-          <button 
-            type="button"
-            className={`${styles.arrowButton} ${styles.nextArrow}`}
-            onClick={nextRecipe}
-            aria-label="Next recipe"
-          >
-            →
-          </button>
-        </div>
-      </div>
+      <button 
+        type="button"
+        className={`${styles.arrowButton} ${styles.rightArrow}`} 
+        onClick={nextRecipe}
+      >
+        →
+      </button>
     </div>
   );
 }
