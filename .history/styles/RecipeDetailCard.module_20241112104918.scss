@@ -38,11 +38,8 @@
             min-height: 450px;
         }
 
-        .cardFront {
-            padding: 0rem;
-        }
-        .cardBack {
-            padding: .6rem;
+        .cardFront, .cardBack {
+            padding: 0.em;
         }
 
         .content {

@@ -11,7 +11,7 @@
         width: 95% !important;
         margin: 0 auto !important;
         padding: 1px 0.5rem !important;
-        transform: none !important;
+        transform: translateX(8%) !important;
         transform-origin: center center !important;
     }
 }
@@ -24,7 +24,7 @@
     overflow: hidden;
     cursor: pointer;
     transition: transform 0.3s ease;
-    margin: 0 auto;
+    margin-top: 100px;
     background-color: #f0f0f0;
     box-shadow: var(--shadow-md);
 

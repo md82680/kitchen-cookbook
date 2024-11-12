@@ -38,11 +38,8 @@
             min-height: 450px;
         }
 
-        .cardFront {
-            padding: 0rem;
-        }
-        .cardBack {
-            padding: .6rem;
+        .cardFront, .cardBack {
+            padding: 0.8rem;
         }
 
         .content {
@@ -105,10 +102,19 @@
 }
 
 .cardBack {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transform-origin: center center;
     transform: rotateY(180deg);
-    padding: 30px;
     background: var(--color-background);
     overflow-y: auto;
+    padding: 0.8rem;
+    margin: 0 auto;
 
     .content {
         opacity: 1;
