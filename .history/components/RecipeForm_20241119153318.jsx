@@ -114,10 +114,7 @@ export default function RecipeForm({ onSuccess }) {
       const response = await fetch("/api/recipes", {
         method: "POST",
         body: submitData,
-        credentials: 'include',
-        headers: {
-          'Accept': 'application/json',
-        }
+        credentials: 'same-origin'
       });
 
       const data = await response.json();

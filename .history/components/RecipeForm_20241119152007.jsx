@@ -8,7 +8,6 @@ const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
 
 export default function RecipeForm({ onSuccess }) {
-  const { data: session, status } = useSession();
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
@@ -21,13 +20,6 @@ export default function RecipeForm({ onSuccess }) {
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [error, setError] = useState("");
-
-  console.log("Current session:", session);
-
-  if (status === "unauthenticated") {
-    router.push("/login");
-    return null;
-  }
 
   const validateImageFile = (file) => {
     if (!file) {
@@ -89,10 +81,6 @@ export default function RecipeForm({ onSuccess }) {
     setIsSubmitting(true);
 
     try {
-      if (!session) {
-        throw new Error("You must be logged in to create a recipe");
-      }
-
       validateForm();
 
       const submitData = new FormData();
@@ -109,14 +97,14 @@ export default function RecipeForm({ onSuccess }) {
         }
       });
 
-      console.log("Current session before submit:", session);
+      console.log("Submitting data to server:", Object.fromEntries(submitData));
 
       const response = await fetch("/api/recipes", {
         method: "POST",
         body: submitData,
         credentials: 'include',
         headers: {
-          'Accept': 'application/json',
+          // Don't set Content-Type as it's automatically set for FormData
         }
       });
 

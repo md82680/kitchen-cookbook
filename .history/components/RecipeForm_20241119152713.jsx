@@ -116,7 +116,7 @@ export default function RecipeForm({ onSuccess }) {
         body: submitData,
         credentials: 'include',
         headers: {
-          'Accept': 'application/json',
+          'Authorization': `Bearer ${session.user.username}`
         }
       });
 

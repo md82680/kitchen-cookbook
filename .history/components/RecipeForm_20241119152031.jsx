@@ -89,10 +89,6 @@ export default function RecipeForm({ onSuccess }) {
     setIsSubmitting(true);
 
     try {
-      if (!session) {
-        throw new Error("You must be logged in to create a recipe");
-      }
-
       validateForm();
 
       const submitData = new FormData();
@@ -109,14 +105,14 @@ export default function RecipeForm({ onSuccess }) {
         }
       });
 
-      console.log("Current session before submit:", session);
+      console.log("Submitting data to server:", Object.fromEntries(submitData));
 
       const response = await fetch("/api/recipes", {
         method: "POST",
         body: submitData,
         credentials: 'include',
         headers: {
-          'Accept': 'application/json',
+          // Don't set Content-Type as it's automatically set for FormData
         }
       });
 

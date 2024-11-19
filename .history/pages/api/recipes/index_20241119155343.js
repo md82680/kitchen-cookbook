@@ -109,9 +109,9 @@ export default async function handler(req, res) {
         // Create the recipe
         const recipe = await prisma.recipe.create({
           data: {
-            recipeTitle: fields.recipeTitle[0],
-            recipeDescription: fields.recipeDescription[0],
-            recipeInstructions: fields.recipeInstructions[0],
+            title: fields.recipeTitle[0],
+            description: fields.recipeDescription[0],
+            instructions: fields.recipeInstructions[0],
             recipeCategory: fields.recipeCategory[0],
             imageUrl: imageData.imageUrl,
             imageName: imageData.imageName,

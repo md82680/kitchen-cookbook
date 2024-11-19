@@ -61,14 +61,17 @@ export const authOptions = {
         token.username = user.username;
         token.userId = user.id;
       }
+      console.log("JWT callback:", { token });
       return token;
     },
     async session({ session, token }) {
       session.user = {
-        id: token.userId,
+        ...session.user,
+        role: token.role,
         username: token.username,
-        role: token.role
+        id: token.userId,
       };
+      console.log("Session callback:", { session });
       return session;
     },
   },
@@ -79,18 +82,8 @@ export const authOptions = {
     strategy: "jwt",
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
-  cookies: {
-    sessionToken: {
-      name: `next-auth.session-token`,
-      options: {
-        httpOnly: true,
-        sameSite: 'lax',
-        path: '/',
-        secure: process.env.NODE_ENV === 'production'
-      }
-    }
-  },
-  debug: process.env.NODE_ENV === 'development',
+  debug: true,
+  secret: process.env.NEXTAUTH_SECRET,
 };
 
 // Export the NextAuth function with the config

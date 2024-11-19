@@ -97,6 +97,9 @@ export default function RecipeForm({ onSuccess }) {
 
       const submitData = new FormData();
       
+      submitData.append("userId", session.user.id);
+      submitData.append("username", session.user.username);
+      
       if (image) {
         submitData.append("image", image);
       }
@@ -110,13 +113,14 @@ export default function RecipeForm({ onSuccess }) {
       });
 
       console.log("Current session before submit:", session);
+      console.log("Submitting data to server:", Object.fromEntries(submitData));
 
       const response = await fetch("/api/recipes", {
         method: "POST",
         body: submitData,
         credentials: 'include',
         headers: {
-          'Accept': 'application/json',
+          'x-auth-token': session?.user?.id || ''
         }
       });
 

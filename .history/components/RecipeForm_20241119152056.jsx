@@ -110,14 +110,12 @@ export default function RecipeForm({ onSuccess }) {
       });
 
       console.log("Current session before submit:", session);
+      console.log("Submitting data to server:", Object.fromEntries(submitData));
 
       const response = await fetch("/api/recipes", {
         method: "POST",
         body: submitData,
         credentials: 'include',
-        headers: {
-          'Accept': 'application/json',
-        }
       });
 
       const data = await response.json();

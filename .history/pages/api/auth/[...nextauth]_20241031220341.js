@@ -3,8 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from "../../../lib/prisma";
 import bcrypt from "bcryptjs";
 
-// Export the configuration object separately
-export const authOptions = {
+export default NextAuth({
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -59,16 +58,17 @@ export const authOptions = {
       if (user) {
         token.role = user.role;
         token.username = user.username;
-        token.userId = user.id;
       }
+      console.log("JWT callback:", { token });
       return token;
     },
     async session({ session, token }) {
       session.user = {
-        id: token.userId,
+        ...session.user,
+        role: token.role,
         username: token.username,
-        role: token.role
       };
+      console.log("Session callback:", { session });
       return session;
     },
   },
@@ -79,19 +79,6 @@ export const authOptions = {
     strategy: "jwt",
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
-  cookies: {
-    sessionToken: {
-      name: `next-auth.session-token`,
-      options: {
-        httpOnly: true,
-        sameSite: 'lax',
-        path: '/',
-        secure: process.env.NODE_ENV === 'production'
-      }
-    }
-  },
-  debug: process.env.NODE_ENV === 'development',
-};
-
-// Export the NextAuth function with the config
-export default NextAuth(authOptions);
+  debug: true, // Enable debug messages
+  secret: process.env.NEXTAUTH_SECRET,
+});

@@ -70,66 +70,73 @@ export default async function handler(req, res) {
   console.log("Cookies:", req.headers.cookie);
   
   try {
+    // Add this debug section
+    const token = await getToken({ req });
     const session = await getServerSession(req, res, authOptions);
     
-    console.log("Session in API:", {
-      exists: !!session,
-      user: session?.user,
-      expires: session?.expires
+    console.log("Debug Auth Info:", {
+      hasToken: !!token,
+      tokenData: token,
+      hasSession: !!session,
+      sessionData: session,
+      cookies: req.headers.cookie
     });
 
-    if (!session?.user?.username) {
-      console.log("No valid session found");
+    // Try both token and session
+    if (!token && !session) {
+      console.log("Authentication failed - No token or session found");
+      console.log("Headers:", req.headers);
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    // Use either token or session data
+    const username = session?.user?.username || token?.username;
+    if (!username) {
+      console.log("No username found in session or token");
       return res.status(401).json({ message: "Unauthorized" });
     }
 
     if (req.method === "POST") {
+      console.log("Processing POST request for user:", username);
+      
       try {
+        // Parse form after authentication
         const { fields, files } = await parseForm(req);
-        
-        // Get user from database using session username
-        const user = await prisma.user.findUnique({
-          where: { username: session.user.username }
+        console.log("Form data parsed successfully:", {
+          fieldKeys: Object.keys(fields),
+          hasImage: !!files.image
         });
 
-        if (!user) {
-          return res.status(404).json({ error: "User not found" });
-        }
+        // Parse ingredients and handle files as you currently do
+        const ingredients = Array.isArray(fields.ingredients) 
+          ? JSON.parse(fields.ingredients[0] || "[]")
+          : JSON.parse(fields.ingredients || "[]");
 
-        // Process the recipe creation
+        // Your existing image handling code
         let imageData = {
           imageUrl: "/images/default-recipe.jpg",
           imageName: null,
         };
 
-        if (files?.image) {
+        if (files && files.image) {
+          console.log("Processing image upload");
           imageData = await handleFileUpload(files.image);
         }
 
-        // Create the recipe
-        const recipe = await prisma.recipe.create({
-          data: {
-            recipeTitle: fields.recipeTitle[0],
-            recipeDescription: fields.recipeDescription[0],
-            recipeInstructions: fields.recipeInstructions[0],
-            recipeCategory: fields.recipeCategory[0],
-            imageUrl: imageData.imageUrl,
-            imageName: imageData.imageName,
-            ingredients: {
-              create: JSON.parse(fields.ingredients).map(ing => ({
-                amount: ing.amount,
-                unit: ing.unit,
-                item: ing.item
-              }))
-            },
-            authorId: user.id
-          }
+        // Get user directly from session username
+        const user = await prisma.user.findUnique({
+          where: { username: username }
         });
 
-        return res.status(200).json(recipe);
-      } catch (error) {
-        console.error("Recipe creation error:", error);
-        return res.status(500).json({ message: error.message });
+        if (!user) {
+          console.log("User not found:", username);
+          return res.status(404).json({ error: "User not found" });
+        }
+
+        // Rest of your existing recipe creation code...
+      } catch (parseError) {
+        console.error("Form parsing error:", parseError);
+        return res.status(400).json({ message: "Error parsing form data" });
       }
     }
 
