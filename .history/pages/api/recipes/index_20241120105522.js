@@ -72,19 +72,24 @@ const handleFileUpload = async (file) => {
 };
 
 export default async function handler(req, res) {
+  console.log("=== API Route Hit ===");
+  console.log("Method:", req.method);
+  console.log("Session user:", session?.user);
+  
+  console.log("=== Request Details ===");
+  console.log("Method:", req.method);
+  console.log("Headers:", req.headers);
+  console.log("Cookies:", req.headers.cookie);
+  
   try {
-    // Move session initialization to the top before any logging
     const session = await getServerSession(req, res, authOptions);
     
-    console.log("=== API Route Hit ===");
-    console.log("Method:", req.method);
-    console.log("Session user:", session?.user);
-    
-    console.log("=== Request Details ===");
-    console.log("Method:", req.method);
-    console.log("Headers:", req.headers);
-    console.log("Cookies:", req.headers.cookie);
-    
+    console.log("Session in API:", {
+      exists: !!session,
+      user: session?.user,
+      expires: session?.expires
+    });
+
     if (!session?.user?.username) {
       console.log("No valid session found");
       return res.status(401).json({ message: "Unauthorized" });
