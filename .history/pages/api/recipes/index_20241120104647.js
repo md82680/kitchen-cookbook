@@ -4,6 +4,7 @@ import fs from "fs/promises";
 import prisma from "../../../lib/prisma";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../auth/[...nextauth]";
+import { getToken } from "next-auth/jwt";
 
 export const config = {
   api: {
@@ -92,7 +93,7 @@ export default async function handler(req, res) {
         
         // Get user from database using session username
         const user = await prisma.user.findUnique({
-          where: { id: session.user.id }
+          where: { username: session.user.username }
         });
 
         if (!user) {
