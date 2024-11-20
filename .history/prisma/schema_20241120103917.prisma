@@ -32,7 +32,6 @@ model Recipe {
   imageUrl         String
   ingredients      Ingredient[]
   author           User           @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  description      String
 }
 
 model Ingredient {

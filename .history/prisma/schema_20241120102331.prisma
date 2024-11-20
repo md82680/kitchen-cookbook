@@ -21,18 +21,18 @@ model User {
 }
 
 model Recipe {
-  id                Int            @id @default(autoincrement())
-  authorId          Int
-  createdAt         DateTime       @default(now())
-  updatedAt         DateTime       @updatedAt
-  imageName         String?
-  recipeCategory    RecipeCategory
-  title            String
-  instructions     String
-  imageUrl         String
-  ingredients      Ingredient[]
-  author           User           @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  description      String
+  id                 Int            @id @default(autoincrement())
+  authorId           Int
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+  imageName          String?
+  recipeCategory     RecipeCategory
+  description        String
+  imageUrl           String
+  instructions       String
+  title               String
+  ingredients        Ingredient[]
+  author             User           @relation(fields: [authorId], references: [id], onDelete: Cascade)
 }
 
 model Ingredient {
